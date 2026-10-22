@@ -1,0 +1,10 @@
+# Local POV automation configuration and generated assets
+.env
+pov-automation/.env
+pov-automation/channel_config.txt
+pov-automation/character/
+pov-automation/videos/
+
+# Python cache files
+__pycache__/
+*.py[cod]
