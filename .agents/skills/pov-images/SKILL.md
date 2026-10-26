@@ -1,6 +1,6 @@
 ---
 name: pov-images
-description: Generate or regenerate the scene images for the active Hierarchy POV video using the Kie.ai image API. Use when asked to generate POV images or retry rejected scenes.
+description: Generate or regenerate active Hierarchy POV scene images using Codex's built-in image tool or Kie.ai, based on IMAGE_PROVIDER. Use when asked to generate POV images or retry rejected scenes.
 ---
 
 # Generate POV scene images
@@ -9,9 +9,12 @@ Run the image workflow from `pov-automation/` at the repository root. Read sourc
 
 ## Instructions
 
-1. Read `POV niche/generate_images_pov.md` and follow its current Python implementation and response parsing exactly. Do not use older snippets or change the Kie.ai result URL parsing.
-2. Check `pov-automation/.env` and `pov-automation/channel_config.txt` for the required Kie.ai key and public `PROTAGONIST_URL`. Inspect key presence only; never display or log secret values.
-3. Confirm the active script JSON exists and identify which scenes need images. Respect approved, pending, and rejected scene state so completed images are not charged again. Keep the route distinction: protagonist scenes get the reference; supporting and object scenes do not.
-4. This stage makes paid Kie.ai requests and can take close to an hour for a full video. Before a new batch, tell the user the number of scenes and that image generation consumes account credits. Proceed when the user has requested image generation.
-5. Use a bounded worker count as specified in the source. Run long jobs in a monitored shell session, report progress, and poll that same process to completion. If interrupted, inspect files and logs before retrying; the source workflow is resumable.
-6. Report generated, skipped, and failed scene counts. Do not mark images approved; the user reviews pending images and moves accepted ones to `approved/`.
+1. Resolve `pov-automation/channel_config.txt`. For `IMAGE_PROVIDER=codex`, read and follow `POV niche/generate_images_codex.md` and `pov-automation/style/README.md`. This is the authoritative local Codex route. Do not run the Kie batch code.
+2. Resolve the active video pointer once at dispatch and pass that explicit absolute production folder to every operation. Parallel workers must never reread the pointer. Initialize the production manifest before generation. Keep the current script, character bank, ten levels, age progression, costume locks and scene classifications.
+3. For Codex, use `style_pipeline.py` to prepare every request. Claim each prepared request once with `claim SCENE WORKER` before dispatch. Send its exact `tool_arguments` to the built-in image tool. Use only its explicit `referenced_image_paths`; never use recent conversation images or a generated scene as a rendering anchor. Do not silently fall back to text-only generation. Each request contains the immutable complete global style, isolated video context and shot specification.
+4. Use the immutable reference library for HOW things are drawn. Identity references apply only to main-character shots. Style references must never supply story objects, clothing, setting or people. All four scene types use the same bible, with people-free reference routing for object scenes.
+5. After generation, ingest the actual saved PNG and tool receipt. Open every candidate and the canonical references with `view_image`. Review full resolution and a batch contact sheet. Write specific region-by-region observations, and separate style from identity, content and composition. Never infer a visual pass from prompts, hashes, file existence or a checklist. `uncertain` blocks approval. Local text-only automation cannot perform this vision step.
+6. Submit the review through the bridge. Passing candidates enter approved automatically; failures are preserved in style_rejected. Rebuild each retry from the canonical authority plus targeted feedback. Default maximum is three total attempts, configurable at initialization; exhausted scenes require attention. Never alter the master bible or adopt newly generated images to excuse a failure. Technical failures are recorded separately. Preserve existing approved artwork; replacement requires explicit user authorization and archives the prior bytes.
+7. Existing approved images remain untouched and are `legacy_unverified` until audited under the new version. Old style_checked.txt entries are not evidence of a current pass. Do not enroll a whole legacy production unless auditing or generating for it is requested. An enrolled production cannot assemble until all scenes have hash-bound visual passes.
+8. Report generated, visually inspected, approved, rejected/retried, skipped and needs-attention counts, and distinguish structural tests from visual evidence. No claim of exact visual fidelity from metadata tests.
+9. If the user explicitly selects Kie, preserve the implementation and result URL parsing in `POV niche/generate_images_pov.md`. That legacy provider is not the hardened Codex bridge; disclose this instead of claiming it has identical enforcement. Do not switch providers to bypass an unavailable built-in tool.

@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "f76109b12ead94a958b0a7b9ec45a5820e38a72adc98efe9d12f78c9d4fe332c",
+  "image_sha256": "155a003e8307ddbe0ba96eca266d4f5f07f0fe4ce69cee3773ac64ff4d0c4f01",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Bold continuous outlines define the protagonist, console banks, watertight door and handset; close to the canonical interior sample."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Muted gray steel, navy coveralls, cream lights and restrained green sonar traces; the earlier global red cast is corrected."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Broad soft cel shadows model the steel console faces and navy fabric; no photographic reflections."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "Bald rounded head, nose, ears, brows and mouth remain coherent and consistent with the canonical identity."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Enclosed sonar station with watch board, console and sealed bulkhead; believable submarine interior."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Clean focal hierarchy and readable panels; no visible glitches."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "The protagonist is unmistakably bald and wears the appropriate navy coveralls."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "Handset, clipboard and sonar displays support the watch scene; no exterior porthole appears."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Wide full-body view leaves headroom and keeps the operator and equipment within frame."
+    }
+  },
+  "regions": {
+    "people_faces": "One bald protagonist with focused expression at the sonar console.",
+    "clothing": "Dark navy coveralls and dark boots.",
+    "foreground_props": "Handset, clipboard, log pages and sonar screens.",
+    "architecture": "Watertight door, equipment cabinets and close overhead piping.",
+    "distance": "Console line and rear door recede naturally behind the protagonist.",
+    "lighting": "Warm cream work lights, muted grays and small red indicators only."
+  },
+  "correction": ""
+}

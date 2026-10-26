@@ -1,3 +1,9 @@
+> **Local Codex style authority:** For `IMAGE_PROVIDER=codex`, use
+> `generate_images_codex.md` and `../pov-automation/style/README.md`.
+> The versioned global bible supersedes historical style text and per-video
+> rendering anchors. The Kie code below remains an optional legacy route.
+> Scripts provide story/shot content; they cannot redefine the artistic medium.
+
 CRITICAL: Use EXACTLY the Python code in STEP 2.
 The URL parsing logic below reads the image URL from `resultJson` (a JSON-encoded
 string inside the poll response), with a fallback to a top-level `resultUrls`
@@ -46,6 +52,11 @@ Check if `[video_folder]/images/rejected.txt` exists:
 - If YES: only regenerate the scene numbers listed in that file
 - If NO: generate all scenes that don't already have an image in `[video_folder]/images/approved/` or `[video_folder]/images/pending/`
 
+## Topic-neutral content lock and audit
+
+Before creating prompts, derive a content lock for the active video from its script and character bank: topic, era, location, culture, occupation, technology, clothing, props, architecture, food, and setting. The style reference controls rendering only. Never copy its subject matter into the current video and never carry content forward from another video. Every visible element, including background architecture and small props, must fit the active scene. Where details are unspecified, use simple plausible details for the established context or leave them out. Give each prompt clear positive setting anchors and concise exclusions aimed at likely leakage. A recognizable element from a different topic, era, culture, or occupation fails review. For supporting scenes, verify the protagonist is absent, including his defining bald head; never copy a person or identity from the style-reference image. When a fault is found, add a durable topic-neutral check and targeted prompt correction before generating again. This rule applies to every topic, including historical, contemporary, and speculative stories.
+
+Audit rendering independently by region: people and faces, clothing, foreground props, architecture/set, distant background, and lighting/shadows. Each region must match the canonical reference's line weight, flat fills, cel shadows, and detail density. A well-matched face cannot compensate for glossy, gradient-shaded, realistic, or overly detailed surroundings. Apply this same rendering gate regardless of the video's topic or era.
 ## STEP 2 — Generate Images with GPT Image 2 via Kie.ai
 
 For each scene that needs an image, call the Kie.ai API.
@@ -488,8 +499,7 @@ After the script finishes, it will automatically print a summary. Tell the user:
 - Total scenes generated successfully vs. total scenes, and elapsed minutes
 - The **route summary** — confirm that `object_scene` count matches the `text-to-image (object, no people)` route, and that no `main` scene fell into the no-reference fallback
 - If any failed: the scene numbers are already written to `rejected.txt` automatically — just run `/generate_images_pov` again to retry only those scenes, no manual editing needed
-- Location of new images: `[video_folder]/images/pending/`
-- Next step: review images in pending/, copy approved ones to approved/, then run `/generate_audio` or `/generate_final` when all images are in approved/
+- Location of generated candidates: `[video_folder]/images/pending/`. Visually inspect every candidate against the canonical style reference, move passing images to `approved/`, and preserve failing attempts under `style_rejected/` before rerunning those scene numbers. Repeat generation and inspection until each requested scene passes; never move an uninspected image to approved. Once all scenes are approved, run `/generate_audio` or `/generate_final`.
 
 ## STEP 4 — What to Look For When Reviewing 250 Images
 

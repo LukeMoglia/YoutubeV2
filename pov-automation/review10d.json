@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "dcd3703a8c19f475f5e0e95766c5d6ff63e0b10066968d4365c87cc9c198cda1",
+  "image_sha256": "fc8fb4b4733b5e8cd3fd294511f5234acd5c85e6a06d614e24291b33515dcf10",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Bold coherent outlines shape the protagonist, sealed cylinders, bulkhead and equipment."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Muted steel, cream and navy with restrained red fittings."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Illustrated cel shading and soft metal bands are consistent with the canonical medium."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "Bald protagonist, rounded face and navy coveralls are coherent."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Enclosed equipment room with watertight doors and mounted cylindrical stores."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Clean illustration with readable foreground props and no visible artifacts."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "The bald protagonist remains recognizable in the level-one costume."
+    },
+    "content": {
+      "verdict": "fail",
+      "observation": "FAIL: the protagonist sorts retirement paperwork and correspondence beside apparent torpedo stores in a forward weapons compartment, a mismatched and distracting scene."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Wide-medium full-body view keeps the protagonist and nearby table within frame."
+    }
+  },
+  "regions": {
+    "people_faces": "One bald protagonist holding letters and handset.",
+    "clothing": "Navy coveralls, appropriate for the entry-level character.",
+    "foreground_props": "Envelopes, phone, desk and unrelated large storage canisters.",
+    "architecture": "Watertight doors and weapons-like cylindrical stores suggest a torpedo room, not a mail or shore-duty scene.",
+    "distance": "Cylindrical racks draw strong attention behind the protagonist.",
+    "lighting": "Warm cream overhead lamps with muted steel surfaces."
+  },
+  "correction": "Keep the mail and duffel activity but place it at a submarine pier or in a simple crew berthing area with no weapons, torpedo tubes or cylindrical ordnance. Remove retirement paperwork and use ordinary family mail. Preserve the same bald protagonist, navy coveralls, muted outlined style and wide composition."
+}

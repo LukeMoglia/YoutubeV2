@@ -1,0 +1,64 @@
+{
+  "production_id": "baa8e264-ba23-42e0-b4be-7c50d7337039",
+  "request_sha256": "ab461c223923544fdd8f6cebd176d4c475c0d252003057ad700c4a74881d2e3a",
+  "image_sha256": "38cbc4f00427b24a9567a086af55873a593980b5bce127f784430ad56c048490",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex full-resolution comparative visual review, 2026-10-26; qualitative, no numerical confidence claim",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Clean dark contours on watch rim and chain; fewer interior marks match the object reference."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Restrained ochre brass and warm brown support cool-neutral shadows; no oversaturation."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Broad illustrated light/shadow bands replace scratches and tiny specular detail, consistent with canonical metal treatment."
+    },
+    "character_construction": {
+      "verdict": "not_applicable",
+      "observation": "No people or faces; object-only construction."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Plain bench with a few seams; no softened station backdrop or dense grain."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Clean outlined illustration throughout; faint broad tonal variation remains within the locally approved illustrated treatment."
+    },
+    "identity": {
+      "verdict": "not_applicable",
+      "observation": "No character identity involved."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "Closed watch and entire short chain alone on wooden bench; no kitchen subjects or extra tools."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Entire watch and chain visible in a wide frame with margins."
+    }
+  },
+  "regions": {
+    "people_faces": "Absent.",
+    "clothing": "Absent.",
+    "foreground_props": "Watch and chain use simple outlined forms and broad bands.",
+    "architecture": "Only workbench seams visible; no copied kitchen set.",
+    "distance": "No distant scene or blur.",
+    "lighting": "Subdued broad illustrated shading, no tiny glossy scratches."
+  },
+  "correction": ""
+}

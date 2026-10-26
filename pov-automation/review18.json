@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "4853d00712380ed737af0202632ba042e211dcff78a167c7207d5bde1be4a38b",
+  "image_sha256": "b0894619a4af8ead83a402f54b77c332800e90406eafeb86b9b414354ba79e79",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Bold clean contours define both characters, their hands, the envelope and submarine-pier details."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Muted navy, cream and warm sunset colors remain balanced and natural."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Cel-shaded faces and coveralls with simplified illustrated harbor surfaces."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "Protagonist has bald rounded head and full face; Mara has a normal face and brown hair."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Harbor pier, moored submarine and dock structures form a clear outdoor setting."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Crisp 2D illustration with clear expressions and no visible artifacts."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "The protagonist remains bald; Mara has hair and is visually distinct."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "A family letter handoff at the pier fits the separation-from-home cost beat."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Two-shot keeps both full figures and their envelope visible with clear margins."
+    }
+  },
+  "regions": {
+    "people_faces": "Bald protagonist looks down at the letter; brown-haired Mara faces him with a soft, worried expression.",
+    "clothing": "Protagonist in navy coveralls; Mara in dark practical clothes with hair tied back.",
+    "foreground_props": "Single envelope exchanged between them.",
+    "architecture": "Submarine moored beside the pier, with dock infrastructure behind.",
+    "distance": "Waterfront and submarine add scale without obscuring either person.",
+    "lighting": "Warm late-day light, gentle contrast and muted sky."
+  },
+  "correction": ""
+}

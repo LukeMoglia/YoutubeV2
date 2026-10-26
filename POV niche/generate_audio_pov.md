@@ -1,10 +1,8 @@
-**IMPORTANT — Execution method:** Run the Python scripts in this file using the Bash tool with `run_in_background=true`. Do NOT use PowerShell's `Start-Process` to launch them. `run_in_background=true` triggers an automatic notification the moment a script finishes — without it, the script can complete successfully with zero indication, and Claude Code will sit idle waiting for the user to ask "is it done?" instead of reporting results immediately.
-
-**Windows execution note:** `run_in_background=true` via the Bash tool is preferred because it auto-notifies when the script finishes. If Bash fails due to Windows path parsing and you fall back to PowerShell's `Start-Process`, there is no automatic notification on completion. In that case, do not wait silently. After launching, periodically read the script's log/output file (e.g. every 60-90 seconds) to check progress, and proactively report completion to the user as soon as the final summary line appears in the output — never wait for the user to ask "is it done?"
+Run the local Python generator from PowerShell or a monitored shell session. Keep the process visible and report progress until it completes; do not launch it detached without checking its output.
 
 # Generate Audio Files for Each POV Scene
 
-Generate one ElevenLabs voiceover audio file per scene, plus one subtitle file you can upload to YouTube. Stop there. The user assembles the final video manually in CapCut, or runs `/generate_final_pov` for an automated assembly.
+Generate one local expressive Chatterbox voiceover audio file per scene, plus one subtitle file you can upload to YouTube. Stop there. The user assembles the final video manually in CapCut, or runs `/generate_final_pov` for an automated assembly.
 
 **No FFmpeg video assembly here. No clip concatenation. No final MP4.** This command ends at audio + subtitles.
 
@@ -12,11 +10,11 @@ Generate one ElevenLabs voiceover audio file per scene, plus one subtitle file y
 
 A POV video is **~250 scenes**, not ~120. That means:
 
-- **~250 ElevenLabs calls.** Sequentially at ~5s each, that is roughly **20–25 minutes**.
-- **~3,300 words ≈ 18,000 characters.** Check your ElevenLabs quota before starting. A single POV video consumes roughly double what a finance video does.
+- **~250 local synthesis runs.** Chatterbox loads one model and processes scenes sequentially; elapsed time depends on GPU support, VRAM, CPU, and scene text length.
+- **~3,300 words ≈ 18,000 characters.** Text stays on this computer; local generation does not consume service quota.
 - **Resumability is not optional.** The script skips any scene that already has an MP3 on disk. If it dies at scene 180, re-running it costs nothing for scenes 1–179.
 
-The script below generates audio with a small worker pool (default 3 concurrent) to bring the wall time down to ~8 minutes. Set `MAX_CONCURRENT` to 1 if ElevenLabs rate-limits you.
+Scenes run one at a time so they do not compete for GPU memory. CPU fallback is slower but preserves progress and output naming.
 
 ## STEP 1 — Read Active Video Folder and Verify Images
 
@@ -29,217 +27,45 @@ Read `[video_folder]/current_script.json` and extract:
 Check that `[video_folder]/images/approved/` contains an image for every scene number from 1 to `total_scenes`.
 If any are missing → tell the user exactly which scene numbers are missing and stop. Do not proceed to audio generation if images are incomplete.
 
-## STEP 2 — Voice Direction for the POV Format
+## STEP 2 — Install Chatterbox Once
 
-This is not the finance channel. The narrator is not a friendly host explaining a concept. The narrator is telling the viewer what is happening to **them**, in the present tense, calmly, without warmth.
+Use an isolated Python 3.12 environment so the audio model does not change the rest of the project. The GTX 1060 is a Pascal GPU, so pin PyTorch 2.6.0 with CUDA 12.4; newer prebuilt CUDA wheels may omit Pascal support. The project setup guide documents Python 3.12+. Run these commands from the repository root in PowerShell:
 
-Recommended ElevenLabs voice settings for this format:
-
-```
-stability:        0.45    (higher than finance — the POV voice should not swing emotionally)
-similarity_boost: 0.80
-style:            0.15    (low — restraint carries the format; theatricality kills it)
-speed:            0.92    (slower than finance — this is a documentary, not an explainer)
+```powershell
+py -3.12 -m venv pov-automation/chatterbox-env
+pov-automation/chatterbox-env/Scripts/python.exe -m pip install --upgrade pip
+pov-automation/chatterbox-env/Scripts/python.exe -m pip install torch==2.6.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu124
+pov-automation/chatterbox-env/Scripts/python.exe -m pip install chatterbox-tts==0.1.7
 ```
 
-**Why higher stability.** The finance channel uses `0.3` because Jeff is expressive and reacts to the material. A POV narrator who dramatizes every cost beat sounds like a trailer voice and the immersion collapses. The lines are already devastating; the delivery must be flat enough to let them land. Grief is stated, not performed.
+This installs the local runtime. Chatterbox downloads its model weights on the first generation run. After that, generation is local and does not use an ElevenLabs account or quota. Check whether CUDA is available with:
 
-**Why slower.** At 130 wpm the script runs 25 minutes. The sentences are short — 5 to 11 words. Read at finance pace, the short sentences run together and the format's rhythm disappears. `speed: 0.92` gives each sentence its own beat.
-
-**Do not add emotion tags.** No `[sad]`, no `[whispers]`. The script's power comes from a steady voice describing an unsteady life. If a line needs a pause, the script's sentence break already provides it.
-
-Set these in `.env`:
-```
-ELEVEN_LABS_VOICE_ID=<your chosen voice>
-ELEVEN_LABS_STABILITY=0.45
-ELEVEN_LABS_SIMILARITY=0.80
-ELEVEN_LABS_STYLE=0.15
-ELEVEN_LABS_SPEED=0.92
+```powershell
+pov-automation/chatterbox-env/Scripts/python.exe -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU fallback')"
 ```
 
-The script reads these with the values above as defaults, so `.env` overrides are optional.
+The workflow tries the GTX 1060 when CUDA works. A 1060 came in 3 GB and 6 GB variants; if Chatterbox cannot load on CUDA or inference hits a recognized VRAM/compatibility error, the generator switches to CPU. Other scene inference errors are recorded as failures and do not trigger CPU fallback. CPU generation can take substantially longer. Keep `CHATTERBOX_DEVICE=auto` or leave it unset in `pov-automation/.env`.
 
 ## STEP 3 — Generate Voiceover for Each Scene
 
-**Naming convention:** `scene_001.mp3`, `scene_002.mp3`, … — three-digit zero-padded scene numbers matching the image filenames (`scene_001.png` in `images/approved/`). Alphabetical sort then puts matching audio and image side by side in CapCut.
+Use standard expressive Chatterbox (not Turbo). The approved narrator is conditioned on a 15-second excerpt beginning 60 seconds into the configured male reference recording. Set `CHATTERBOX_REFERENCE_OFFSET_SECONDS=60` and `CHATTERBOX_REFERENCE_AUDIO` in `pov-automation/.env`. Use `exaggeration=0.6` and `cfg_weight=0.3` to reduce clipped, rushed syllables while keeping the approved natural pace. Apply gentle EQ during WAV-to-MP3 conversion: `bass=g=1.1:f=160:w=0.7,treble=g=-0.6:f=5500`. Do not time-stretch the finished audio. The workflow runs scenes sequentially to avoid VRAM contention, validates existing MP3s before skipping them, and converts each generated WAV to `audio/scene_NNN.mp3` with FFmpeg.
 
-**Save raw MP3 from ElevenLabs.** No re-encoding, no normalization, no trimming. The MP3 the API returns is what we keep.
+If changing voices after generation, set `CHATTERBOX_FORCE_REGENERATE=true` in `pov-automation/.env` to replace every existing scene MP3 starting at scene 1. Remove or set it to `false` after generation so future runs can resume by skipping complete MP3s. The script extracts the configured reference excerpt and prepares Chatterbox conditionals once for the scene batch. Keep the approved natural phrasing edits in the active JSON for scenes 126, 140, 184, and 188.
 
-**Hard timeout on every API call:** `requests`' own `timeout=` parameter only covers the HTTP layer. If the TCP socket itself hangs, that timeout never fires and the call blocks forever. Every ElevenLabs call below is wrapped in a thread with a hard deadline.
+Before generating, verify every approved image exists. Then run from the repository root:
 
-```python
-import requests, os, json, sys, time, threading
-from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeoutError
-sys.stdout.reconfigure(line_buffering=True, encoding='utf-8')
-
-# ---- Tuning -------------------------------------------------------------
-# 250 sequential ElevenLabs calls is ~20-25 min. 3 concurrent brings it to
-# ~8 min. Drop to 1 if you hit 429 rate limits.
-MAX_CONCURRENT = 3
-# -------------------------------------------------------------------------
-
-# Load .env file directly — do not rely on os.getenv
-env = {}
-try:
-    with open('.env', 'r', encoding='utf-8-sig') as f:
-        for line in f:
-            line = line.strip()
-            if line and not line.startswith('#') and '=' in line:
-                k, v = line.split('=', 1)
-                env[k.strip()] = v.strip()
-except:
-    pass
-
-ELEVEN_LABS_API_KEY = env.get('ELEVEN_LABS_API_KEY') or os.getenv('ELEVEN_LABS_API_KEY')
-VOICE_ID = env.get('ELEVEN_LABS_VOICE_ID') or os.getenv('ELEVEN_LABS_VOICE_ID')
-
-if not ELEVEN_LABS_API_KEY or not VOICE_ID:
-    print("ERROR: ELEVEN_LABS_API_KEY or ELEVEN_LABS_VOICE_ID missing from .env", flush=True)
-    sys.exit(1)
-
-# POV voice defaults — flatter and slower than the finance channel.
-def _f(key, default):
-    try:
-        return float(env.get(key, default))
-    except ValueError:
-        return default
-
-STABILITY  = _f('ELEVEN_LABS_STABILITY',  0.45)
-SIMILARITY = _f('ELEVEN_LABS_SIMILARITY', 0.80)
-STYLE      = _f('ELEVEN_LABS_STYLE',      0.15)
-SPEED      = _f('ELEVEN_LABS_SPEED',      0.92)
-
-with open('videos/current_video_folder.txt', 'r', encoding='utf-8-sig') as f:
-    video_folder = f.read().strip()
-
-with open(f'{video_folder}/current_script.json', 'r', encoding='utf-8') as f:
-    script = json.load(f)
-
-scenes = script['scenes']
-total_scenes = script.get('total_scenes') or len(scenes)
-os.makedirs(f'{video_folder}/audio', exist_ok=True)
-
-# --- Verify every approved image exists before spending money on audio ---
-missing_images = [
-    s['scene_number'] for s in scenes
-    if not os.path.exists(f"{video_folder}/images/approved/scene_{s['scene_number']:03d}.png")
-]
-if missing_images:
-    print(f"ERROR: {len(missing_images)} scenes have no approved image.", flush=True)
-    print(f"       Missing: {missing_images[:20]}{' ...' if len(missing_images) > 20 else ''}", flush=True)
-    print("       Approve all images before generating audio.", flush=True)
-    sys.exit(1)
-
-# --- HARD TIMEOUT WRAPPER ---
-# The pool must be at least as large as MAX_CONCURRENT or scenes deadlock
-# waiting for a free timeout worker.
-_executor = ThreadPoolExecutor(max_workers=max(4, MAX_CONCURRENT * 2))
-
-def call_with_hard_timeout(func, timeout_seconds, *args, **kwargs):
-    """Run func in a separate thread. If it doesn't return within
-    timeout_seconds, give up and move on — the underlying thread is
-    abandoned rather than waited on, so a TCP-layer hang can never
-    freeze the whole script."""
-    future = _executor.submit(func, *args, **kwargs)
-    try:
-        return future.result(timeout=timeout_seconds)
-    except FutureTimeoutError:
-        return None
-    except Exception as e:
-        print(f"  (call error: {e})", flush=True)
-        return None
-
-def _do_generate_audio(text, scene_number):
-    url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
-    headers = {
-        "xi-api-key": ELEVEN_LABS_API_KEY,
-        "Content-Type": "application/json"
-    }
-    data = {
-        "text": text,
-        "model_id": "eleven_v3",
-        "voice_settings": {
-            "stability": STABILITY,
-            "similarity_boost": SIMILARITY,
-            "style": STYLE,
-            "speed": SPEED
-        }
-    }
-    response = requests.post(url, json=data, headers=headers, timeout=30)
-    if response.status_code == 429:
-        raise Exception(f"rate limited (429) on scene {scene_number}")
-    if response.status_code != 200:
-        raise Exception(f"ElevenLabs error scene {scene_number}: {response.status_code} {response.text[:200]}")
-    return response.content
-
-def generate_audio(text, scene_number, max_retries=2):
-    for attempt in range(max_retries + 1):
-        content = call_with_hard_timeout(_do_generate_audio, 35, text, scene_number)
-        if content:
-            filename = f"{video_folder}/audio/scene_{scene_number:03d}.mp3"
-            # Write to a temp file then rename, so a crash mid-write can never
-            # leave a truncated MP3 that skip-if-exists would happily accept.
-            tmp = filename + '.part'
-            with open(tmp, 'wb') as f:
-                f.write(content)
-            os.replace(tmp, filename)
-            return filename
-        if attempt < max_retries:
-            wait = 2 ** attempt
-            print(f"  Scene {scene_number}: attempt {attempt+1} hung or errored, retrying in {wait}s...", flush=True)
-            time.sleep(wait)
-    print(f"[FAIL] Scene {scene_number}: failed after {max_retries+1} attempts.", flush=True)
-    return None
-
-failed_scenes = []
-done_count = 0
-_lock = threading.Lock()
-
-def process(scene):
-    global done_count
-    n = scene['scene_number']
-    path = f"{video_folder}/audio/scene_{n:03d}.mp3"
-    if os.path.exists(path) and os.path.getsize(path) > 1024:
-        print(f"[SKIP] Scene {n}: audio already exists.", flush=True)
-        with _lock:
-            done_count += 1
-        return
-    result = generate_audio(scene['voiceover'], n)
-    with _lock:
-        if result:
-            done_count += 1
-            if done_count % 25 == 0:
-                print(f"  --- progress: {done_count}/{total_scenes} ---", flush=True)
-        else:
-            failed_scenes.append(n)
-
-print(f"Generating audio for {total_scenes} scenes with {MAX_CONCURRENT} workers...\n", flush=True)
-start = time.time()
-with ThreadPoolExecutor(max_workers=MAX_CONCURRENT) as pool:
-    list(pool.map(process, scenes))
-elapsed = (time.time() - start) / 60
-
-failed_scenes.sort()
-if failed_scenes:
-    print(f"\n[WARN] {len(failed_scenes)} scenes failed: {failed_scenes}", flush=True)
-    print(f"       Re-run /generate_audio_pov to retry — it skips scenes that already have an MP3.", flush=True)
-else:
-    print(f"\n[OK] Generated {total_scenes} audio files in {video_folder}/audio/ ({elapsed:.1f} min)", flush=True)
-
-# --- Character count, for quota accounting ---
-chars = sum(len(s['voiceover']) for s in scenes)
-print(f"     Characters sent to ElevenLabs: {chars:,}", flush=True)
+```powershell
+pov-automation/chatterbox-env/Scripts/python.exe pov-automation/generate_audio_chatterbox.py
 ```
 
-This produces `total_scenes` MP3 files — one per scene, each with its own natural duration. Files are named `scene_001.mp3` through `scene_NNN.mp3`.
-
-## STEP 4 — Generate the Subtitle File
+The script checks image completeness, FFmpeg, and ffprobe; selects CUDA when available; falls back to CPU only for CUDA setup/compatibility or VRAM errors; and writes atomic per-scene MP3s. Once all scenes are ready, it rebuilds `final_output/subtitles.srt` using actual final MP3 durations and current voiceover text. Its final summary separates new files, valid skipped files, scene failures, device, and any fallback or setup failure. If interrupted, rerun the same command; valid finished MP3s are skipped, while partial or invalid files are regenerated. Check all failed scene numbers in the final summary and rerun after resolving any reported issue.
+## STEP 4 — Subtitle File (generated by the script)
 
 Generate one `.srt` covering all scenes in sequence. This file is **not burned into any video**. It exists so the user can upload it to YouTube as a caption track, which improves accessibility and gives YouTube a clean transcript to index.
 
-Use `ffprobe` to measure each MP3's real duration. This is the only ffmpeg-family tool used here, and it does not encode anything — it reads metadata.
+Use `ffprobe` to measure each MP3's real duration. FFmpeg converts Chatterbox WAV output to MP3 in STEP 3; `ffprobe` reads the finished file metadata without encoding.
 
-**A note on MP3 durations.** ElevenLabs returns MP3s whose real duration is slightly longer than the "natural" read — MP3 frames are padded to a fixed size. A 4.30-second read comes back as a 4.336-second file. Across 250 scenes those fractions sum to several seconds. Always measure with `ffprobe`; never estimate duration from word count.
+**A note on MP3 durations.** The encoded MP3 files can be slightly longer than the "natural" read — MP3 frames are padded to a fixed size. A 4.30-second read comes back as a 4.336-second file. Across 250 scenes those fractions sum to several seconds. Always measure with `ffprobe`; never estimate duration from word count.
 
 ```python
 import subprocess, json, os
@@ -334,7 +160,7 @@ Files ready:
 Stats:
 - Total scenes: [total_scenes]
 - Combined audio duration: [min:sec]
-- Characters sent to ElevenLabs: [count]
+- Audio provider: Chatterbox expressive (local)
 
 Next step — pick one:
 
@@ -357,11 +183,11 @@ YouTube metadata (from current_script.json):
 - Hashtags:       [hashtags]
 
 Cost of this run:
-- Audio (ElevenLabs): [character count] characters against your subscription
-- ffprobe: free
+- Audio generation: local; no TTS account quota
+- ffmpeg/ffprobe: local tools
 
-If any scenes failed: they are listed above. Re-run /generate_audio_pov — it skips
-scenes that already have an MP3 and retries only the missing ones.
+If any scenes failed: they are listed above. Re-run `$pov-audio` — it skips
+scenes that already have a valid MP3 and retries only the missing ones. CPU fallback and CUDA setup errors are reported separately.
 ```
 
 Do not generate a video file here. The pipeline stops at audio and subtitles.

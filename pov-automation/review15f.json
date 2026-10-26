@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "a6d20ea9232c9c7e78dfe0eeca9d01250bcb4cd1e85f9c514d71cee9738893d0",
+  "image_sha256": "b17360babc4ee2096c0ef8e3a4c12e627d1c8e7b0cdcd267640d161b1e6969b2",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Bold outlines define a red signal lamp, logbook, steel shelf and bulkhead."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "FAIL: the lamp glows intensely saturated red with broad bright reflections outside the restrained palette."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Illustrated shapes are present, but the lamp has glassy highlights and strong reflected glow."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "Not applicable: object-only frame contains no people."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Steel bulkhead and shelf remain recognizable and unobtrusive."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Clean rendering, but lamp reflections and multiple objects pull focus away from the script beat."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "Not applicable: no people are present."
+    },
+    "content": {
+      "verdict": "fail",
+      "observation": "FAIL: both a warning lamp and separate logbook are prominent; the scene requires one object, and the pairing does not depict the hull sound."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Two-object composition splits focus between a glowing lamp and book."
+    }
+  },
+  "regions": {
+    "people_faces": "No people.",
+    "clothing": "No people.",
+    "foreground_props": "Bright caged lamp and separate logbook.",
+    "architecture": "Steel panel and shelf.",
+    "distance": "Background panels are subdued.",
+    "lighting": "Saturated red glow reflects broadly over nearby surfaces."
+  },
+  "correction": "Show one single steel hull panel seam with a few rivets, subtly vibrating as visual evidence of the low hull groan. No lamp, logbook, people or extra objects. Use restrained steel-gray color, clean contours and soft cel shadows; avoid bright glow and photorealistic texture."
+}

@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "72381f36242812a6ea22b4a13971f74c6f3d1004510922030c2d551246642530",
+  "image_sha256": "58d463060a5402c2061cd91ac262e81c179b673c2d6037d9c316409f84c2658e",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Clean strong contours define character, duffel, pier gear, submarine hull and dock building."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Muted navy, olive, cream and charcoal with natural blue sky; no neon or oversaturation."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Soft cel shadows model clothing and cases; hull and pier use simplified illustrated highlights."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "Bald protagonist’s full face and body remain coherent."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Submarine pier with solid dock building, cases, duffel and moored boat."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Crisp unified cartoon illustration without legible stray text or artifacts."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "Protagonist is clearly bald and consistent with level-one costume."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "The character checks mail beside a duffel at the pier; no retirement folder or weapons appear."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Full-body wide view retains clear headroom and keeps mail and submarine in frame."
+    }
+  },
+  "regions": {
+    "people_faces": "One bald protagonist listening on a handset while reading an envelope.",
+    "clothing": "Navy coveralls and dark boots.",
+    "foreground_props": "Duffel, letters and equipment cases.",
+    "architecture": "Dock building and moored submarine; no torpedo stores.",
+    "distance": "Pier and boat recede behind the character, with clear illustrated contours.",
+    "lighting": "Natural daylight in muted blue and warm neutral tones."
+  },
+  "correction": ""
+}

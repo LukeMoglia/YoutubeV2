@@ -1,0 +1,96 @@
+{
+  "version": "bald-life-v1",
+  "bible": "STYLE_BIBLE.md",
+  "bible_sha256": "de1137dc4bca5badca772a7641d90709bdd3752d31e8fa2446fb83ba2658b2ca",
+  "references": [
+    {
+      "id": "identity",
+      "path": "references/identity.png",
+      "sha256": "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+      "source": "pov-automation/character/character_reference.png",
+      "source_status": "existing canonical identity",
+      "categories": [
+        "protagonist_close_up",
+        "protagonist_full_body"
+      ],
+      "role": "identity",
+      "review": "Existing global identity sheet; age and clothing remain script-controlled."
+    },
+    {
+      "id": "people",
+      "path": "references/people.png",
+      "sha256": "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+      "source": "pov-automation/videos/2026-10-22_your-life-as-every-rank-in-a-roman-legio/images/approved/scene_114.png",
+      "source_status": "existing approved production asset",
+      "categories": [
+        "supporting_characters"
+      ],
+      "role": "style",
+      "review": "Visually inspected: rounded faces, bold contours, simplified outdoor masses. Reference subjects must not transfer."
+    },
+    {
+      "id": "interior",
+      "path": "references/interior.png",
+      "sha256": "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+      "source": "pov-automation/videos/2026-10-25_your-life-as-every-rank-in-a-michelin-ki/images/approved/scene_001.png",
+      "source_status": "existing approved production asset",
+      "categories": [
+        "indoor_environment",
+        "protagonist_full_body"
+      ],
+      "role": "style",
+      "review": "Documented user-selected rendering target; rich equipment and restrained illustrated metal bands retained."
+    },
+    {
+      "id": "objects",
+      "path": "references/objects.png",
+      "sha256": "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+      "source": "pov-automation/videos/2026-10-25_your-life-as-every-rank-in-a-michelin-ki/images/approved/scene_067.png",
+      "source_status": "existing approved production asset",
+      "categories": [
+        "object_only"
+      ],
+      "role": "style",
+      "review": "Visually inspected people-free object/material example. Food detail must not grow into microtexture."
+    },
+    {
+      "id": "exterior",
+      "path": "references/exterior.png",
+      "sha256": "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+      "source": "pov-automation/videos/2026-10-22_your-life-as-every-rank-in-a-roman-legio/images/approved/scene_105.png",
+      "source_status": "existing approved production asset",
+      "categories": [
+        "outdoor_environment",
+        "wide_establishing"
+      ],
+      "role": "style",
+      "review": "Visually inspected people-free architecture/landscape; simplified contour drawing. Dawn colour is not a palette mandate."
+    },
+    {
+      "id": "interaction",
+      "path": "references/interaction.png",
+      "sha256": "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5",
+      "source": "pov-automation/videos/2026-10-25_your-life-as-every-rank-in-a-michelin-ki/images/approved/scene_066.png",
+      "source_status": "existing approved production asset",
+      "categories": [
+        "multi_character_interaction",
+        "dramatic_low_light"
+      ],
+      "role": "style",
+      "review": "Visually inspected interaction and blue night exterior; clothing and identities are not global. Youth wrinkles are a content defect, not an identity rule."
+    }
+  ],
+  "routes": {
+    "main": [
+      "interior",
+      "identity"
+    ],
+    "supporting": [
+      "people"
+    ],
+    "none": [
+      "objects"
+    ]
+  },
+  "max_attempts": 3
+}

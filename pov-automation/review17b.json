@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "d707c69fb295388368a7d5ac199b2896d9a01c57a825d15bf30667b17f00ea8b",
+  "image_sha256": "f3b403cdcdb41565742cb466225941c9dede9bb039b059d2bb1be1bbab9dc8d5",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Bold clean contours define the bald protagonist, chart table, sealed hatch and wall equipment."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Muted navy, steel, cream and restrained blue map details remain natural."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Soft cel shadows on face and coveralls with simplified steel highlights."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "Canonical bald rounded head, nose, ears, eyebrows and mouth remain intact."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Enclosed chart room with a closed opaque watertight hatch; no exterior opening or light."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Crisp coherent 2D illustration, no artifacts."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "Protagonist is visibly bald and wears the correct navy coveralls."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "Chart and log-writing scene remains inside a sealed submarine room; no outside view."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Wide-medium framing keeps protagonist, hatch and table clearly visible with headroom."
+    }
+  },
+  "regions": {
+    "people_faces": "Single bald protagonist writing in a notebook.",
+    "clothing": "Navy coveralls and boots.",
+    "foreground_props": "Notebook, chart, mug and plotting tools.",
+    "architecture": "Solid sealed bulkhead hatch, piping and gauges.",
+    "distance": "Equipment and chart table establish interior depth.",
+    "lighting": "Warm cabin lamps; no exterior daylight source."
+  },
+  "correction": ""
+}

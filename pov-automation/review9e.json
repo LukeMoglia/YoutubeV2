@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "d7f0dad896fd2df1341f0ec764468ec72b462cb2ca6e2c5798b6613bf0d7c32c",
+  "image_sha256": "ba70631a110c5214ed65a931f7f8580b3a56248e8003cb41c6192d6537f5edf5",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Bold clean outlines now define the protagonist, bench, pier rail, submarine hull and shoreline; background edges remain illustrated and clear."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Dusty blue, navy, warm tan, cream and charcoal stay restrained and natural."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Character and environment use soft illustrated tonal bands without photographic blur."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "Bald protagonist has the canonical rounded face and navy coveralls."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Submarine harbor, pier and distant hills are drawn with crisp simplified contours and no photographic blur."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Unified cartoon rendering across character, sea, sky and dock; no visible artifacts."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "Bald character remains clear against the harbor and matches the identity sheet."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "A moored submarine, pier bench and metal mug make a coherent harbor setting."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Wide seated view includes the submarine and shoreline while keeping the character prominent and uncropped."
+    }
+  },
+  "regions": {
+    "people_faces": "One bald protagonist seated on a bench, hands clasped.",
+    "clothing": "Dark navy coveralls.",
+    "foreground_props": "Bench, chained metal mug and dock curb.",
+    "architecture": "Pier railings, moored submarine and dock structures.",
+    "distance": "Crisp stylized hills, water and clouds retain drawn contours.",
+    "lighting": "Overcast coastal light with restrained blue-gray tones."
+  },
+  "correction": ""
+}

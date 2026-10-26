@@ -1,0 +1,64 @@
+{
+  "production_id": "baa8e264-ba23-42e0-b4be-7c50d7337039",
+  "request_sha256": "29d04bb3eb6309155bd6ee4bd8e9ec4689f0d7721017cf57ea609dc2374bbe93",
+  "image_sha256": "c63f8834a9efb47d4ad5dd306736835c0baf35dccc81d1ede405326121042048",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual inspection of actual tool output and six canonical assets, 2026-10-26",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "fail",
+      "observation": "Watch outlines are visible but material scratches and dense wood marks dominate over simple contour construction."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Muted brass brown and cool grey lighting remain naturalistic."
+    },
+    "shading": {
+      "verdict": "fail",
+      "observation": "Reflective chain highlights and dense brass tonal modelling exceed simplified bands of object reference."
+    },
+    "character_construction": {
+      "verdict": "not_applicable",
+      "observation": "No people or faces visible."
+    },
+    "backgrounds": {
+      "verdict": "fail",
+      "observation": "Wood microtexture and softened station background depart from crisp outlined environment."
+    },
+    "finish": {
+      "verdict": "fail",
+      "observation": "Scratched metal and photographic wood detail are materially more realistic than canonical object reference."
+    },
+    "identity": {
+      "verdict": "not_applicable",
+      "observation": "Object-only scene with no shared protagonist."
+    },
+    "content": {
+      "verdict": "fail",
+      "observation": "Extra tools and oil can occupy a bench requested to be otherwise empty."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Watch and complete short chain fit within wide frame."
+    }
+  },
+  "regions": {
+    "people_faces": "None visible.",
+    "clothing": "Absent.",
+    "foreground_props": "Watch has realistic fine scratches and reflective link highlights.",
+    "architecture": "Window and distant station are overly soft.",
+    "distance": "Station silhouette loses crisp reference-style contours.",
+    "lighting": "Cool daylight is appropriate; material response is too realistic."
+  },
+  "correction": "Remove all scratches, grain and microtexture. Draw the watch as simple smooth brass fill plus one flat shadow and one broad illustrated highlight band; draw chain links as simple outlined loops without specular dots. Workbench must be a plain flat brown shape with at most three seam lines. Remove every tool, jar, oil can and other prop: only closed watch and chain. Keep all outlines crisp; no blurred station view. Match the flat phone casing and simplified saucepan bands in reference, not photographic brass."
+}

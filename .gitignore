@@ -4,7 +4,9 @@ pov-automation/.env
 pov-automation/channel_config.txt
 pov-automation/character/
 pov-automation/videos/
+pov-automation/chatterbox-env/
 
 # Python cache files
 __pycache__/
 *.py[cod]
+pov-automation/xtts-env/

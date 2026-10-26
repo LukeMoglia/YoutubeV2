@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "04b3eb3b4fe3bd07b32806aaf700a693efa5aa76bcba05ea01b6bcdf2fad68fa",
+  "image_sha256": "f3ba6a438308942d2c29f77d56b6960ce257a01aa323ac20ffe01697e70a0764",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Consistent thick contours organize crew, sonar stations, chart table, piping and hatch."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Muted gray, charcoal, cream and navy; green radar traces are subdued and red indicators remain small."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Illustrated cel shadows and simplified metal bands match the canonical references."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "Supporting crew have full faces and hair; no protagonist appears in this world scene."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Enclosed sonar room has equipment banks and watertight doors without outside openings."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Clean readable scene despite multiple operators and equipment."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "No bald protagonist is present; crew remain distinct supporting characters as required."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "Operators at sonar stations and a shared chart table support the submarine watch setting."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "High wide view establishes multiple stations and maintains clear focal paths."
+    }
+  },
+  "regions": {
+    "people_faces": "Four supporting crew with hair, distinct faces and focused expressions.",
+    "clothing": "Navy coveralls across the crew.",
+    "foreground_props": "Sonar screens, chart table, clipboards and task lamps.",
+    "architecture": "Pipe runs, console banks, watertight door and metal floor.",
+    "distance": "Stations recede in layers behind the chart table.",
+    "lighting": "Subdued cream work lights with a few dim red indicators and green screens."
+  },
+  "correction": ""
+}

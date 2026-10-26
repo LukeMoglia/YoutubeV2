@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "e54ae5ebb933dd72ee13240425f59f089b8c8afd57d1dca41ab41671e112798a",
+  "image_sha256": "fa3557080d8e0855d5dc1e98e7b787bb7656e564ccdda4ce818154bcd3d1888d",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Bold continuous contours keep the operator, console, log board and handsets readable; close to the canonical interior sample."
+    },
+    "colour": {
+      "verdict": "fail",
+      "observation": "FAIL: saturated red light washes across most of the ceiling, consoles and floor, creating a neon cast outside the muted palette."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Broad illustrated shadows shape the console and coveralls; highlights remain drawn rather than photographic."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "The bald protagonist has rounded head, nose, ears, brows and mouth; body proportions remain coherent."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Dense sonar room with consoles, a watch board and narrow passage; believable enclosed work area."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Clean contours and clear focal hierarchy, with no apparent glitches."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "Bald face and navy coveralls match the protagonist and level-one costume."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "Sonar station, handset and log fit the scene; no outside view or unrelated objects."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Wide full-body framing keeps the protagonist and major station equipment in frame with headroom."
+    }
+  },
+  "regions": {
+    "people_faces": "One bald protagonist at the console with a focused, subdued expression.",
+    "clothing": "Dark navy coveralls; no added costume or identity drift.",
+    "foreground_props": "Handset, clipboard and console controls support the watch task.",
+    "architecture": "Submarine control space with enclosed passage, watch board and equipment banks.",
+    "distance": "Equipment rows recede to a dark passage; readable scene depth.",
+    "lighting": "Red practical lamps dominate the entire scene with excessive saturation; needs localized dim indicators."
+  },
+  "correction": "Keep the same sonar watch scene and framing. Reduce the red lighting to a few small dim status indicators, with most illumination in restrained warm cream and charcoal tones. Preserve the bald protagonist, navy coveralls, clean outlined equipment and cel shading; avoid global red glow."
+}

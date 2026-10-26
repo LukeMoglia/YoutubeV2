@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "812fc432639b44de22dc85dec99179b1810f0b4b76b16ac8fcd4616267364156",
+  "image_sha256": "327cadb299eac1b69c28c1a63d0161f63b5f8d449ac1b89ea11cc7e3016a9d09",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Clean contours distinguish the work tables, crew and equipment; linework follows the established illustrated medium."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Restrained navy, cream and olive with warm practical lamps; no neon cast."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Soft cel shadows shape figures and desk surfaces without realistic gloss."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "Supporting crew faces are coherent, but the required bald protagonist is not visibly identifiable among the workers."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Submarine workroom with desks, equipment cabinets and clipped watch papers."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Clear overhead view, with small paper marks remaining texture rather than focal text."
+    },
+    "identity": {
+      "verdict": "fail",
+      "observation": "FAIL: all visible workers appear to have dark hair; no bald protagonist is visible in this main-character shot."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "Several crew study logs and watch papers in an enclosed workroom; the setting fits the topic."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Overhead composition distributes workers across desks but gives no clear bald focal character."
+    }
+  },
+  "regions": {
+    "people_faces": "All visible people appear dark-haired; none is the bald protagonist required for this POV scene.",
+    "clothing": "Navy coveralls across the crew.",
+    "foreground_props": "Forms, map, pens, clipboards and desks.",
+    "architecture": "Enclosed metal room with equipment cabinets and a circular hatch.",
+    "distance": "Bird’s-eye view layers multiple tables and workers.",
+    "lighting": "Warm lamps illuminate the room evenly."
+  },
+  "correction": "Retain the overhead submarine workroom and paperwork activity, but place the bald protagonist clearly at the nearest chart table, with the canonical rounded light-tan head, small nose, visible ears and dark brows. Give every background crew member hair and keep them secondary. Preserve the muted palette, clean outlines and framing."
+}

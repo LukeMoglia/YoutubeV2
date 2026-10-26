@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "be348c463878090015b955985c992b57f0ea2db2fec4d7e045c58fd5c0ad7d77",
+  "image_sha256": "b3cdbcce0fca7115c019a47e55ad8fb69a117294ee11e528107c1d5f584af40d",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Strong rounded contours outline one envelope and steel shelf, consistent with the canonical object illustration."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Warm cream paper and muted gray steel remain restrained."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Soft illustrated shadows and broad surface highlights; paper folds use simple shaded regions."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "Not applicable: no people."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Metal shelf and bulkhead are minimal and softly secondary."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Clean, polished illustrated envelope with no distracting texture or extra props."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "Not applicable: no people."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "Exactly one sealed envelope is centered alone; the logbook is removed."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Single object centered with generous margin and clear evidence-like lighting."
+    }
+  },
+  "regions": {
+    "people_faces": "No people.",
+    "clothing": "No people.",
+    "foreground_props": "One sealed envelope with no writing or additional objects.",
+    "architecture": "Simple steel shelf against a submarine bulkhead.",
+    "distance": "Background bulkhead is secondary and uncluttered.",
+    "lighting": "Soft warm directional light creates a modest envelope shadow."
+  },
+  "correction": ""
+}

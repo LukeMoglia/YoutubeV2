@@ -1,0 +1,262 @@
+{
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "method": "Actual full-resolution Codex visual inspection; subjective labels, no automated visual classifier or confidence score.",
+  "cases": [
+    {
+      "path": "v1/references/identity.png",
+      "sha256": "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+      "expected_style": "pass",
+      "coverage": [
+        "protagonist_close_up",
+        "protagonist_full_body"
+      ],
+      "observation": "Existing global identity sheet; age and clothing remain script-controlled.",
+      "content_note": "Rendering/identity reference only; source wardrobe, era and age details do not govern new shots."
+    },
+    {
+      "path": "v1/references/people.png",
+      "sha256": "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+      "expected_style": "pass",
+      "coverage": [
+        "supporting_characters"
+      ],
+      "observation": "Visually inspected: rounded faces, bold contours, simplified outdoor masses. Reference subjects must not transfer.",
+      "content_note": "Rendering/identity reference only; source wardrobe, era and age details do not govern new shots."
+    },
+    {
+      "path": "v1/references/interior.png",
+      "sha256": "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+      "expected_style": "pass",
+      "coverage": [
+        "indoor_environment",
+        "protagonist_full_body"
+      ],
+      "observation": "Documented user-selected rendering target; rich equipment and restrained illustrated metal bands retained.",
+      "content_note": "Rendering/identity reference only; source wardrobe, era and age details do not govern new shots."
+    },
+    {
+      "path": "v1/references/objects.png",
+      "sha256": "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+      "expected_style": "pass",
+      "coverage": [
+        "object_only"
+      ],
+      "observation": "Visually inspected people-free object/material example. Food detail must not grow into microtexture.",
+      "content_note": "Rendering/identity reference only; source wardrobe, era and age details do not govern new shots."
+    },
+    {
+      "path": "v1/references/exterior.png",
+      "sha256": "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+      "expected_style": "pass",
+      "coverage": [
+        "outdoor_environment",
+        "wide_establishing"
+      ],
+      "observation": "Visually inspected people-free architecture/landscape; simplified contour drawing. Dawn colour is not a palette mandate.",
+      "content_note": "Rendering/identity reference only; source wardrobe, era and age details do not govern new shots."
+    },
+    {
+      "path": "v1/references/interaction.png",
+      "sha256": "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5",
+      "expected_style": "pass",
+      "coverage": [
+        "multi_character_interaction",
+        "dramatic_low_light"
+      ],
+      "observation": "Visually inspected interaction and blue night exterior; clothing and identities are not global. Youth wrinkles are a content defect, not an identity rule.",
+      "content_note": "Rendering/identity reference only; source wardrobe, era and age details do not govern new shots."
+    },
+    {
+      "path": "evidence/smoke-clock-before.png",
+      "sha256": "c63f8834a9efb47d4ad5dd306736835c0baf35dccc81d1ede405326121042048",
+      "expected_style": "fail",
+      "coverage": [
+        "object_only",
+        "cross_video"
+      ],
+      "observations": {
+        "linework": {
+          "verdict": "fail",
+          "observation": "Watch outlines are visible but material scratches and dense wood marks dominate over simple contour construction."
+        },
+        "colour": {
+          "verdict": "pass",
+          "observation": "Muted brass brown and cool grey lighting remain naturalistic."
+        },
+        "shading": {
+          "verdict": "fail",
+          "observation": "Reflective chain highlights and dense brass tonal modelling exceed simplified bands of object reference."
+        },
+        "character_construction": {
+          "verdict": "not_applicable",
+          "observation": "No people or faces visible."
+        },
+        "backgrounds": {
+          "verdict": "fail",
+          "observation": "Wood microtexture and softened station background depart from crisp outlined environment."
+        },
+        "finish": {
+          "verdict": "fail",
+          "observation": "Scratched metal and photographic wood detail are materially more realistic than canonical object reference."
+        },
+        "identity": {
+          "verdict": "not_applicable",
+          "observation": "Object-only scene with no shared protagonist."
+        },
+        "content": {
+          "verdict": "fail",
+          "observation": "Extra tools and oil can occupy a bench requested to be otherwise empty."
+        },
+        "composition": {
+          "verdict": "pass",
+          "observation": "Watch and complete short chain fit within wide frame."
+        }
+      },
+      "evaluator": "Codex visual inspection of actual tool output and six canonical assets, 2026-10-26"
+    },
+    {
+      "path": "evidence/smoke-clock-after.png",
+      "sha256": "38cbc4f00427b24a9567a086af55873a593980b5bce127f784430ad56c048490",
+      "expected_style": "pass",
+      "coverage": [
+        "object_only",
+        "cross_video"
+      ],
+      "observations": {
+        "linework": {
+          "verdict": "pass",
+          "observation": "Clean dark contours on watch rim and chain; fewer interior marks match the object reference."
+        },
+        "colour": {
+          "verdict": "pass",
+          "observation": "Restrained ochre brass and warm brown support cool-neutral shadows; no oversaturation."
+        },
+        "shading": {
+          "verdict": "pass",
+          "observation": "Broad illustrated light/shadow bands replace scratches and tiny specular detail, consistent with canonical metal treatment."
+        },
+        "character_construction": {
+          "verdict": "not_applicable",
+          "observation": "No people or faces; object-only construction."
+        },
+        "backgrounds": {
+          "verdict": "pass",
+          "observation": "Plain bench with a few seams; no softened station backdrop or dense grain."
+        },
+        "finish": {
+          "verdict": "pass",
+          "observation": "Clean outlined illustration throughout; faint broad tonal variation remains within the locally approved illustrated treatment."
+        },
+        "identity": {
+          "verdict": "not_applicable",
+          "observation": "No character identity involved."
+        },
+        "content": {
+          "verdict": "pass",
+          "observation": "Closed watch and entire short chain alone on wooden bench; no kitchen subjects or extra tools."
+        },
+        "composition": {
+          "verdict": "pass",
+          "observation": "Entire watch and chain visible in a wide frame with margins."
+        }
+      },
+      "evaluator": "Codex full-resolution comparative visual review, 2026-10-26; qualitative, no numerical confidence claim"
+    },
+    {
+      "path": "evidence/smoke-submarine-before.png",
+      "sha256": "1ae09cd297a58b1048f5e1c8f578002408dc703a94ab59bebfc310e2b5dd728e",
+      "expected_style": "fail",
+      "coverage": [
+        "supporting_character",
+        "cross_video"
+      ],
+      "observations": {
+        "linework": {
+          "verdict": "pass",
+          "observation": "Dark clean contours consistently outline person, pipes and consoles."
+        },
+        "colour": {
+          "verdict": "uncertain",
+          "observation": "Officer skin reads warm orange tan rather than the requested medium brown."
+        },
+        "shading": {
+          "verdict": "pass",
+          "observation": "Clothing uses broad cel-shadow regions; background panels remain illustrated."
+        },
+        "character_construction": {
+          "verdict": "fail",
+          "observation": "Eyes have large white sclera and realistic nose/lip construction unlike small solid dark ovals and button nose."
+        },
+        "backgrounds": {
+          "verdict": "fail",
+          "observation": "Map and panel wear introduce overly fine texture and dense marks."
+        },
+        "finish": {
+          "verdict": "fail",
+          "observation": "Mixed facial construction and detailed map do not match the canonical series throughout."
+        },
+        "identity": {
+          "verdict": "pass",
+          "observation": "Protagonist absent; a distinct supporting woman appears."
+        },
+        "content": {
+          "verdict": "fail",
+          "observation": "Hair is tied into a bun rather than requested short curls. No Roman or kitchen objects are visible."
+        },
+        "composition": {
+          "verdict": "pass",
+          "observation": "Officer, chart console and watertight door are clearly arranged in wide interior."
+        }
+      },
+      "evaluator": "Codex visual inspection of actual tool output and six canonical assets, 2026-10-26"
+    },
+    {
+      "path": "evidence/smoke-submarine-after.png",
+      "sha256": "c4bed5dca05a18478a1620818a28b178d48eb5964ca5d2aa1005e2c1375557d1",
+      "expected_style": "pass",
+      "coverage": [
+        "supporting_character",
+        "cross_video"
+      ],
+      "observations": {
+        "linework": {
+          "verdict": "pass",
+          "observation": "Consistent dark contours on officer, consoles, door and foreground chart."
+        },
+        "colour": {
+          "verdict": "pass",
+          "observation": "Navy, muted blue-grey and warm medium-brown skin preserve restrained relationships."
+        },
+        "shading": {
+          "verdict": "pass",
+          "observation": "Broad cel-shadow shapes on coveralls and equipment; no realistic surface wear."
+        },
+        "character_construction": {
+          "verdict": "pass",
+          "observation": "Small solid dark oval eyes, simple curved nose and mouth, rounded face and short clustered curls return to canonical construction."
+        },
+        "backgrounds": {
+          "verdict": "pass",
+          "observation": "Readable outlined pipes, door and screens; simplified map routes replace microdetail."
+        },
+        "finish": {
+          "verdict": "pass",
+          "observation": "Consistent illustrated finish on people and equipment; no photorealistic surfaces."
+        },
+        "identity": {
+          "verdict": "pass",
+          "observation": "Distinct supporting woman with short black curls and medium-brown skin; shared bald protagonist absent."
+        },
+        "content": {
+          "verdict": "pass",
+          "observation": "Modern coveralls, submarine door and chart console; no Roman armour, banner, spears or kitchen subject transfer."
+        },
+        "composition": {
+          "verdict": "pass",
+          "observation": "Wide interior clearly establishes officer at navigation console and control-room surroundings."
+        }
+      },
+      "evaluator": "Codex full-resolution comparative visual review, 2026-10-26; qualitative, no numerical confidence claim"
+    }
+  ]
+}

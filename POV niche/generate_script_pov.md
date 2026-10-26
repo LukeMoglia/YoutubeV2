@@ -1,10 +1,22 @@
+> **Local Codex style authority:** For `IMAGE_PROVIDER=codex`, use
+> `generate_images_codex.md` and `../pov-automation/style/README.md`.
+> The versioned global bible supersedes historical style text and per-video
+> rendering anchors. The Kie code below remains an optional legacy route.
+> Scripts provide story/shot content; they cannot redefine the artistic medium.
+
 # Generate POV Video Script — Master POV Style (Ten Levels): $ARGUMENTS
 
-## STEP 0 — Call Anthropic API to Write the Script
+## STEP 0 — Choose a Script Writer
 
-**DO NOT write the script yourself. DO NOT use Python string generation.**
+**Codex mode (default):** Have Codex write the complete JSON using the creative instructions and schema in this document. Do not require an API key. Save the model's JSON response to `pov-automation/videos/script_jobs/<unique-job-uuid>/script.json`, then run this shared validator/finalizer from `pov-automation/`. Every concurrent job needs its own UUID and file:
 
-Instead, run this Python script to call the Anthropic API with the full writing instructions below as the system prompt, and save the returned JSON:
+```powershell
+python "../POV niche/finalize_pov_script.py" --input "videos/script_jobs/<unique-job-uuid>/script.json" --topic "Your Life as Every Rank in [World]"
+```
+
+The finalizer validates the required structure and writes a unique video folder, `current_video_folder.txt`, script JSON, and ideas history. Correct validation failures before proceeding. Pass the folder printed by the finalizer directly to downstream workers; do not resolve the shared current-folder pointer inside parallel jobs.
+
+**Claude API mode (optional):** If the user chooses Claude, the Python implementation below calls Anthropic with this document's prompt. This mode requires `ANTHROPIC_API_KEY` and incurs API charges. The implementation below is for that provider path only.
 
 ```python
 import anthropic
@@ -658,7 +670,7 @@ Save this script to a temp file and run it with the topic as argument.
 
 ---
 
-## STEP 1 — Required `.env` Keys
+## STEP 1 — Optional Claude API `.env` Keys
 
 ```
 ANTHROPIC_API_KEY=sk-ant-...
@@ -671,7 +683,7 @@ MAIN_CHARACTER_REF=assets/protagonist_reference.png
 
 ## STEP 2 — Review Before Generating Images
 
-The script's console output runs 8 automated checks. Read them. If any line shows `[ERR]` or `[OFF]`, fix the script before spending money on 250 images.
+In Claude API mode, review the script's console checks. In Codex mode, the shared finalizer checks the JSON structure, all ten levels, scene numbering, minimum scene and word counts, ring-closing line, protagonist fixed core, and anti-crop phrase. Fix validation failures before spending money on image generation.
 
 The two checks that matter most:
 
@@ -688,4 +700,4 @@ After the script is written, tell the user:
 >
 > Review the `character_bank` block first — confirm the ten costumes escalate visibly, and that every named secondary character has a full face description.
 >
-> Then run: `/generate_images`
+> Then run: `$pov-images`

@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "95693fa3ff549508cd0b6a20b1333c47f8ddf2d0c61a5cb6bd7dd8243aa4f43a",
+  "image_sha256": "53d3009082fb8973c25681248e82c4a9cb5403709c03ccfd90b1599d7b55df35",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Consistent rounded black contours define protagonist, notebook, equipment cabinets, ladder and watertight door."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Muted navy, gray steel and cream lamp light; restrained naturalistic palette."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Broad soft cel shadows shape the seated pose and metal interior without glossy rendering."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "The protagonist has the required bald rounded head, nose, ears, brows and mouth."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Enclosed chart nook with sealed hatch, ladder, caged lamp and no exterior opening."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Cleanly rendered with clear detail and no visible glitches."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "Bald protagonist and junior navy coveralls remain consistent."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "Notebook, chart and mug support the watch-log scene; solid hatch replaces the impossible outside view."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Seated figure, boots and nearby equipment are all contained within a balanced wide-medium frame."
+    }
+  },
+  "regions": {
+    "people_faces": "Single bald protagonist writing, with a tired expression.",
+    "clothing": "Navy coveralls and dark boots.",
+    "foreground_props": "Notebook, pencil, chart, mug and equipment case.",
+    "architecture": "Ladder, pipes, lockers and a solid steel watertight hatch.",
+    "distance": "Hatch and bunk storage define the compact room behind the protagonist.",
+    "lighting": "Warm caged wall lamp and restrained overhead fill."
+  },
+  "correction": ""
+}

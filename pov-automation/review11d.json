@@ -1,0 +1,64 @@
+{
+  "production_id": "18fa8a71-42c7-4b84-8fc4-1db4a1d95113",
+  "request_sha256": "76064ca054dd90fb8c3f7f28e3491204ab0945e6b019e035ad9f06a4130dad85",
+  "image_sha256": "49daed25296a14d615b89ded03c23e3b601ba9b4430e65a6448f5bf4c7cc4d45",
+  "style_sha256": "d037212582b49eab847197bf5eff3b77647e3e9882d621f06f59a5566842cb3e",
+  "inspected_reference_hashes": [
+    "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+    "916392388d9b41d81e9649bae360a3abd15de0dfc19d67847de516bb3c31cf34",
+    "7110868b5954a1a816cffda963b0ddebed34f715d4ad7af1ca7296805b627102",
+    "aacb2b28756c054ee1ea260ead439010ac66cc8173d88f92c1aeb706be61c3a2",
+    "c87049caec69c1ebd062fbd539a640e578f0b2a316bb2c40e6e3e3c165adeb73",
+    "a44a36fec8107678946f3e81afb43523af974c1b96ce0097c60b6ec2b68c79e5"
+  ],
+  "evaluator": "Codex visual review",
+  "method": "actual_images_viewed",
+  "full_resolution_viewed": true,
+  "checks": {
+    "linework": {
+      "verdict": "pass",
+      "observation": "Continuous dark contours shape the protagonist, tray, sink, counters, utensils and overhead phone."
+    },
+    "colour": {
+      "verdict": "pass",
+      "observation": "Muted navy, cream, sage and steel tones with natural warm light."
+    },
+    "shading": {
+      "verdict": "pass",
+      "observation": "Soft cel shadows and simplified steel highlights remain within the illustration system."
+    },
+    "character_construction": {
+      "verdict": "pass",
+      "observation": "The bald protagonist has full facial features and clear anatomy."
+    },
+    "backgrounds": {
+      "verdict": "pass",
+      "observation": "Enclosed galley with solid bulkhead, watertight door, counters and storage; no exterior window."
+    },
+    "finish": {
+      "verdict": "pass",
+      "observation": "Clean, detailed drawing with clear focus and no obvious artifacts."
+    },
+    "identity": {
+      "verdict": "pass",
+      "observation": "Bald character and navy coveralls remain consistent with the current level."
+    },
+    "content": {
+      "verdict": "pass",
+      "observation": "Washing a food tray in the submarine galley matches the work described."
+    },
+    "composition": {
+      "verdict": "pass",
+      "observation": "Wide full-body shot has headroom and clear aisle depth."
+    }
+  },
+  "regions": {
+    "people_faces": "Single bald protagonist focused on scrubbing a tray.",
+    "clothing": "Navy coveralls and dark boots.",
+    "foreground_props": "Metal tray, sink, stacked pans and overhead handset.",
+    "architecture": "Narrow enclosed galley with solid watertight door and counters.",
+    "distance": "Storage and door create a believable vessel passage.",
+    "lighting": "Warm overhead fixtures with soft shadows and muted steel reflections."
+  },
+  "correction": ""
+}

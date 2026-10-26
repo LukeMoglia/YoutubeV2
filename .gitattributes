@@ -1,0 +1,6 @@
+# Hash-locked style authority must retain identical bytes on Windows checkouts.
+pov-automation/style/v1/*.md -text
+pov-automation/style/v1/*.json -text
+pov-automation/style/v1/*.sha256 -text
+*.png binary
+*.jpg binary
