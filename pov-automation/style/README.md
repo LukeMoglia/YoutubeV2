@@ -128,6 +128,5 @@ python -m unittest discover -s pov-automation/tests -v
 
 Tests use temporary folders and synthetic grey PNGs for state-machine checks.
 Those fixtures are explicitly **not visual style evidence**. The 300-request
-tests make no image-generation calls. See `FINDINGS.md`, `evidence/calibration.json`
-and `evidence/smoke-before-after.jpg` for separately recorded actual visual results.
-Regenerate a small smoke set only when needed, never hundreds of images for tests.
+tests make no image-generation calls. Run this suite after changing the pipeline;
+it does not require a production folder or external image-generation calls.

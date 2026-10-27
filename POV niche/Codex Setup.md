@@ -4,16 +4,20 @@ This repository includes Codex skills in `.agents/skills/` alongside the origina
 
 ## One-time setup
 
-Create `pov-automation/` in the repository root with:
+The clone already contains `pov-automation/`. Add the local files used by your
+channel inside it:
 
 ```text
 pov-automation/
-├── .env
-├── channel_config.txt
-├── character/
-│   └── character_ref.png
-└── videos/
+├── .env                         # optional; only needed for Claude API use
+├── channel_config.txt           # channel name and local settings
+└── character/
+    └── character_ref.png        # your protagonist reference for image generation
 ```
+
+Generated productions are saved under the ignored `pov-automation/videos/`
+folder. The script workflow creates it as needed; create it manually before
+saving a draft job there if you are preparing one by hand.
 
 For Codex script generation, no API key is required: Codex writes the structured JSON, then a local Python finalizer validates and saves it. Set `CHANNEL_NAME` in `channel_config.txt` (the default `the channel` is accepted). Keep the protagonist reference at `character/character_ref.png` for image generation. Local configuration, the character image, and generated video assets are ignored by Git.
 
