@@ -4,10 +4,13 @@ This is the local route for `IMAGE_PROVIDER=codex`. Keep using the installed
 `image_gen.imagegen` tool. No Kie.ai, new API keys, SDK or paid vision service.
 
 Read `pov-automation/style/README.md` for exact commands and the review contract.
-The runtime authority is `pov-automation/style/v1/manifest.json`, its SHA-256 lock,
+The runtime authority is the version selected by
+`pov-automation/style/active_version.txt` (v1 when absent), its SHA-256 lock,
 the complete STYLE_BIBLE.md and its immutable reference PNGs. Per-video style
 profiles, nearest/last approved scenes and historical prompt boilerplate no
 longer override it. Existing files and the user's refined protagonist survive.
+The `style/proposals/v2/` candidate is pending visual approval and must stay
+inactive until the user approves it.
 
 ## Required generate -> inspect -> decide loop
 

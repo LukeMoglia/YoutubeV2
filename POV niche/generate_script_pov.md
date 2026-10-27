@@ -422,6 +422,14 @@ Output ONLY valid JSON. No explanation, no markdown, no code block. Start with {
 
 {
   "topic": "[topic]",
+  "production_context": {
+    "world": "The one world represented by this video.",
+    "period": "The specific period and only that period; do not infer or borrow another era.",
+    "setting": "The locations that belong to this video.",
+    "required_visual_elements": ["Story-specific details this video needs"],
+    "excluded_visual_elements": ["Unrelated periods, settings, clothing, technology, architecture, symbols and props"],
+    "continuity": {"only recurring details needed across this video's scenes": "..."}
+  },
   "channel_name": \"""" + CHANNEL_NAME + """\",
   "title": "Your Life as Every Rank in [World] — 60-70 characters, no emojis",
   "thumbnail_text": "You Must [VERDICT] — max 5 words, second person, present tense",
@@ -461,6 +469,7 @@ Output ONLY valid JSON. No explanation, no markdown, no code block. Start with {
       "voiceover": "10-13 words of voiceover for this scene.",
       "character": "main",
       "scene_style": "pov_scene",
+      "secondary_character_ids": [],
       "image_prompt": "...",
       "camera_effect": "zoom_in",
       "duration_seconds": 6

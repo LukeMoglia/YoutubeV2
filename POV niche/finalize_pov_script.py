@@ -111,6 +111,37 @@ def script_age_layer(bank: dict, level: int) -> str:
     return value
 
 
+def normalize_production_context(data: dict) -> dict:
+    """Keep one explicit world's setting and exclusions with each production."""
+    topic = str(data.get("topic", "")).strip()
+    raw = data.get("production_context")
+    if raw is None:
+        raw = {}
+    if not isinstance(raw, dict):
+        raise ValueError("production_context must be an object")
+    result = {
+        "world": raw.get("world") or topic,
+        "period": raw.get("period") or "Only the period explicitly named by this production's scenes; do not infer another era.",
+        "setting": raw.get("setting") or topic,
+        "required_visual_elements": raw.get("required_visual_elements") or [topic],
+        "excluded_visual_elements": raw.get("excluded_visual_elements") or [
+            "Any period, setting, character, costume, technology, architecture, symbol or prop not required by this production or current scene."
+        ],
+        "continuity": raw.get("continuity") or {},
+    }
+    for key in ("world", "period", "setting"):
+        if not isinstance(result[key], str) or not result[key].strip():
+            raise ValueError(f"production_context.{key} must be a non-empty string")
+    for key in ("required_visual_elements", "excluded_visual_elements"):
+        values = result[key]
+        if not isinstance(values, list) or not values or any(not isinstance(v, str) or not v.strip() for v in values):
+            raise ValueError(f"production_context.{key} must be a non-empty list of specific strings")
+    if not isinstance(result["continuity"], dict):
+        raise ValueError("production_context.continuity must be an object")
+    data["production_context"] = result
+    return result
+
+
 def read_config(path: Path) -> dict[str, str]:
     result: dict[str, str] = {}
     if not path.exists():
@@ -147,6 +178,10 @@ def main() -> int:
     bank = data.get("character_bank")
     if not isinstance(bank, dict):
         errors.append("character_bank must be an object")
+    try:
+        normalize_production_context(data)
+    except ValueError as exc:
+        errors.append(str(exc))
 
     numbers: list[int] = []
     levels: Counter[int] = Counter()
@@ -213,6 +248,18 @@ def main() -> int:
             errors.append(f"scene {index} has empty image_prompt")
         elif scene.get("character") == "main" and FIXED_CORE not in prompt:
             errors.append(f"scene {index} is missing protagonist fixed core")
+        ids = scene.get("secondary_character_ids")
+        if ids is None:
+            # Legacy scripts can be resumed; newly generated scripts should
+            # explicitly list only the recurring characters visible in-frame.
+            scene_text = f"{scene.get('voiceover', '')}\n{prompt or ''}"
+            ids = [name for name in (bank.get("secondary_characters", {}) if isinstance(bank, dict) else {})
+                   if re.search(rf"(?<!\w){re.escape(name)}(?!\w)", scene_text, re.I)]
+            scene["secondary_character_ids"] = ids
+        if not isinstance(ids, list) or any(not isinstance(name, str) for name in ids):
+            errors.append(f"scene {index} secondary_character_ids must be a list of character-bank names")
+        elif isinstance(bank, dict) and any(name not in bank.get("secondary_characters", {}) for name in ids):
+            errors.append(f"scene {index} references an unknown secondary-character ID")
         if isinstance(prompt, str) and FRAME_RULE not in prompt:
             errors.append(f"scene {index} is missing anti-crop phrase")
 
@@ -255,6 +302,18 @@ def main() -> int:
     script_path = folder / "current_script.json"
     script_path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     video_root.mkdir(parents=True, exist_ok=True)
+    automation_root = Path(__file__).resolve().parents[1] / "pov-automation"
+    sys.path.insert(0, str(automation_root))
+    try:
+        from style_pipeline import Production, active_style_root
+        production = Production(folder, style=active_style_root())
+        try:
+            production.init()
+        finally:
+            production.close()
+    except Exception as exc:
+        print(f"ERROR: could not enroll this production in the locked style workflow: {exc}", file=sys.stderr)
+        return 1
     pointer_temp = video_root / f".current_video_folder_{uuid.uuid4().hex}.tmp"
     pointer_temp.write_text(folder.as_posix(), encoding="utf-8")
     pointer_temp.replace(video_root / "current_video_folder.txt")
@@ -266,6 +325,7 @@ def main() -> int:
             stream.write(history_line + "\n")
     style_summary = ", ".join(f"{name}={count}" for name, count in sorted(styles.items()))
     print(f"Script saved: {script_path}")
+    print("Style authority initialized; image generation must pass the review and batch-drift gates.")
     print(f"Scenes: {len(scenes)} | words: {words} | estimated length: {words / 130:.1f} min")
     print(f"Levels: 1-10 present | styles: {style_summary}")
     return 0

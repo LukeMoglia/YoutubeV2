@@ -12,6 +12,8 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from style_pipeline import Production, STYLE, authority, digest, normalize, save, verify_for_assembly
 
+PROPOSAL = Path(__file__).resolve().parents[1] / 'style/proposals/v2'
+
 
 class StylePipelineTests(unittest.TestCase):
     def setUp(self):
@@ -19,16 +21,19 @@ class StylePipelineTests(unittest.TestCase):
         self.root = Path(self.tmp.name)
         self.addCleanup(self.tmp.cleanup)
 
-    def production(self, name='roman', count=4):
+    def production(self, name='roman', count=4, style=STYLE):
         folder = self.root / name
         folder.mkdir(exist_ok=True)
         styles = [('pov_scene', 'main'), ('world_scene', 'supporting'), ('object_scene', 'none'), ('cost_scene', 'main')]
         scenes = [dict(scene_number=n, level=1, scene_style=styles[(n-1)%4][0], character=styles[(n-1)%4][1],
-                       image_prompt=f'{name} unique prop {n}; cinematic framing; realistic placement') for n in range(1, count+1)]
-        save(folder / 'current_script.json', dict(topic=name, character_bank=dict(
+                       image_prompt=f'unique prop {n}; cinematic framing; realistic placement') for n in range(1, count+1)]
+        save(folder / 'current_script.json', dict(topic=name, production_context=dict(
+            world=name, period=f'{name} only', setting=f'{name} setting',
+            required_visual_elements=[f'{name} required setting'], excluded_visual_elements=['unrelated eras'],
+            continuity={'continuity marker': f'{name} only'}), character_bank=dict(
             protagonist_fixed_core='local warm tan bald protagonist', protagonist_age_layers={'level_1_2': 'young smooth face'},
             protagonist_costumes={'level_1': name + ' wardrobe'}, secondary_characters={name: name+' distinct person'}), scenes=scenes))
-        p = Production(folder); p.init(); self.addCleanup(p.close)
+        p = Production(folder, style=style); p.init(); self.addCleanup(p.close)
         return p
 
     def candidate(self, p, n=1):
@@ -43,6 +48,10 @@ class StylePipelineTests(unittest.TestCase):
         for value in r['checks'].values():
             value.update(verdict=verdict, observation='Synthetic state-machine fixture only; no artistic claim.')
         r['regions'] = {k: 'Synthetic region observation' for k in r['regions']}
+        if p.manifest.get('review_contract', 1) >= 2:
+            for metric in r['style_scores'].values():
+                metric.update(score=0, observation='Synthetic contract fixture only; no visual claim.')
+            r['content_isolation']['observation'] = 'Synthetic contract fixture only; no visual claim.'
         if verdict != 'pass': r['correction'] = 'Simplify observed excessive texture in foreground.'
         return r
 
@@ -60,6 +69,8 @@ class StylePipelineTests(unittest.TestCase):
                     self.assertEqual('identity' in [r['id'] for r in req['references']], n % 4 in (1, 0))
                     other = 'submarine' if folder.name == 'roman' else 'roman'
                     self.assertNotIn(other, json.dumps(req['video_context']))
+                    self.assertEqual(req['video_context']['world'], folder.name)
+                    self.assertEqual(req['video_context']['secondary_characters'], {})
                     if n in (1, 100, 200, 300):
                         p.close(); p = Production(folder)
                         self.assertEqual(d['request_sha256'], p.prepare(n)['request_sha256'])
@@ -141,6 +152,44 @@ class StylePipelineTests(unittest.TestCase):
         style = self.root / 'style'; shutil.copytree(STYLE, style)
         (style/'references/objects.png').write_bytes(b'changed')
         with self.assertRaisesRegex(ValueError, 'modified'): authority(style)
+
+    def test_v2_candidate_routes_only_neutral_style_and_identity(self):
+        manifest, _ = authority(PROPOSAL)
+        self.assertEqual(manifest['approval_status'], 'pending_user_approval')
+        self.assertEqual(manifest['routes']['main'], ['neutral', 'identity'])
+        self.assertEqual(manifest['routes']['supporting'], ['neutral'])
+        self.assertEqual(manifest['routes']['none'], ['neutral'])
+        self.assertEqual(manifest['checkpoint_interval'], 20)
+
+    def test_review_score_two_fails_and_batch_audit_is_required(self):
+        p = self.production('candidate', 4, style=PROPOSAL)
+        r = self.review(p, 1)
+        r['style_scores']['linework'].update(score=2, observation='Synthetic failure path.')
+        r['correction'] = 'Correct the line weight.'
+        self.assertEqual(p.review(1, r)['state'], 'rejected')
+        with self.assertRaisesRegex(ValueError, 'Style gate'):
+            verify_for_assembly(p.folder)
+
+    def test_v2_requires_hash_bound_batch_review_before_assembly(self):
+        p = self.production('candidate_batch', 4, style=PROPOSAL)
+        for number in range(1, 5):
+            self.assertEqual(p.review(number, self.review(p, number))['state'], 'approved')
+        with self.assertRaisesRegex(ValueError, 'batch 1'):
+            p.verify()
+        audit = p.checkpoint_template(1)
+        audit.update(evaluator='synthetic test only', full_resolution_comparisons_viewed=True,
+                     verdict='pass', observation='Synthetic checkpoint structure; no visual review occurred.')
+        for metric in audit['drift_scores'].values():
+            metric.update(score=0, observation='Synthetic checkpoint fixture only.')
+        audit['rework_scenes'] = []
+        p.checkpoint(1, audit)
+        p.verify()
+        # Omitted images cannot be hidden by a valid hash subset.
+        stored = json.loads(p.db.execute('SELECT data FROM checkpoints WHERE batch=1').fetchone()[0])
+        stored['image_hashes'].pop('1')
+        p.db.execute('UPDATE checkpoints SET data=? WHERE batch=1', (json.dumps(stored),)); p.db.commit()
+        with self.assertRaisesRegex(ValueError, 'batch 1'):
+            p.verify()
 
     def test_normalization_keeps_story_and_logs_changes(self):
         text, log = normalize('Clean 2D cartoon illustration, arbitrary soft shading, cinematic composition. A realistic brass medal in dramatic lighting.')

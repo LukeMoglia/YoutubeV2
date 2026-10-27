@@ -13,6 +13,13 @@ Do not rehash changed assets to bypass a failure.
 Normal production has no command to update the style. A user-directed change
 requires a separately reviewed version, with deliberate migration of productions.
 
+`active_version.txt` optionally names the active version; when absent, v1 remains
+active. `proposals/v2/` contains a neutral-reference candidate with review
+contract 2, but its manifest says `pending_user_approval`. It is intentionally
+not a runnable active version. Do not copy it into the active library or change
+the pointer until the user approves the reference image and bible. The proposal
+and its limitations are described in `proposals/v2/README.md`.
+
 The references are selected existing approved assets, visually inspected during
 this implementation, not the newest generated images. Their source and reason
 for selection are recorded in the manifest. Six originals collectively cover
@@ -88,6 +95,33 @@ python style_pipeline.py --production $productionFolder technical-failure 1 'act
 After the configured total attempts, the scene becomes `needs_attention` and
 generation stops for that scene. Continue independent scenes and report it.
 Do not delete state or reinitialize to reset the attempt budget.
+
+## Batch drift audits (review contract 2)
+
+Authorities using review contract 2 require an individual style score (0 = close,
+1 = acceptable variation, 2 = drift) for linework, face construction, colour
+regions, cel shading, material rendering and background finish. A score of 2 or
+an unexpected subject, period cue or prop prevents scene approval. After all
+images in a batch pass individual review, generate the hash-bound audit packet:
+
+```powershell
+python style_pipeline.py --production $productionFolder checkpoint-template 1
+```
+
+Open the generated contact sheet, authority sheet and all approved images at full
+resolution. Complete the JSON with the actual evaluator, observations, scores,
+unexpected content and verdict, then submit it:
+
+```powershell
+python style_pipeline.py --production $productionFolder checkpoint 1 'C:/batch-review.json'
+```
+
+The first audit includes at least one scene of every class; later batches contain
+20 scenes. A failed or uncertain audit must identify scenes for rework. Use
+`reopen SCENE REASON`, then repeat generation and individual review before
+re-auditing the batch. A passing audit is bound to exact approved-image and
+reference hashes; changing or omitting any image invalidates it. The audit is a
+human/model attestation supported by files, not an automated visual classifier.
 
 ## Storage, recovery and compatibility
 

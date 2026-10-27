@@ -1,0 +1,39 @@
+{
+  "version": "bald-life-v2-proposed",
+  "approval_status": "pending_user_approval",
+  "bible": "STYLE_BIBLE.md",
+  "bible_sha256": "47414adb2f4cf9c9dd25fb4e45cb3b542c96abb4392a259b67ac3ccae396f641",
+  "review_contract": 2,
+  "references": [
+    {
+      "id": "neutral",
+      "path": "references/neutral_style_sheet.png",
+      "sha256": "cb193a9c7dde1c6994056ece63eef266c3126e1c0255158048ab7af0a668b6ed",
+      "role": "style",
+      "content_scope": "neutral technique samples; no narrative setting or period-specific objects",
+      "source": "generated candidate derived from existing v1 references; requires user approval"
+    },
+    {
+      "id": "identity",
+      "path": "references/identity.png",
+      "sha256": "e5dd155f2cc3907f5820d98042e84095ad02b456b048b626a32efa0bc2b33927",
+      "role": "identity",
+      "content_scope": "shared protagonist identity only",
+      "source": "byte-for-byte copy of v1 identity reference"
+    }
+  ],
+  "routes": {
+    "main": [
+      "neutral",
+      "identity"
+    ],
+    "supporting": [
+      "neutral"
+    ],
+    "none": [
+      "neutral"
+    ]
+  },
+  "max_attempts": 3,
+  "checkpoint_interval": 20
+}
