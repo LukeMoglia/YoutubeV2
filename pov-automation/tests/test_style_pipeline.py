@@ -59,7 +59,7 @@ class StylePipelineTests(unittest.TestCase):
         for value in r['checks'].values():
             value.update(verdict=verdict, observation='Synthetic state-machine fixture only; no artistic claim.')
         r['regions'] = {k: 'Synthetic region observation' for k in r['regions']}
-        if p.manifest.get('review_contract', 1) >= 2:
+        if p.scope().get('review_contract', 1) >= 2:
             for metric in r['style_scores'].values():
                 metric.update(score=0, observation='Synthetic contract fixture only; no visual claim.')
             r['content_isolation']['observation'] = 'Synthetic contract fixture only; no visual claim.'
@@ -160,9 +160,39 @@ class StylePipelineTests(unittest.TestCase):
     def test_approval_tampering_blocks_assembly(self):
         p = self.production(count=1)
         r = self.review(p); p.review(1, r)
+        audit = p.checkpoint_template(1)
+        audit.update(evaluator='synthetic test only', full_resolution_comparisons_viewed=True,
+                     verdict='pass', observation='Synthetic checkpoint structure; no visual review occurred.')
+        for metric in audit['drift_scores'].values():
+            metric.update(score=0, observation='Synthetic checkpoint fixture only.')
+        p.checkpoint(1, audit)
         verify_for_assembly(p.folder)
         (p.folder / 'images/approved/scene_001.png').write_bytes(b'changed')
         with self.assertRaisesRegex(ValueError, 'Style gate'): verify_for_assembly(p.folder)
+
+    def test_active_v1_enforces_drift_scores_and_checkpoints(self):
+        p = self.production('active-style', 4, style=STYLE)
+        self.assertEqual(p.scope()['review_contract'], 2)
+        self.assertEqual(p.scope()['checkpoint_interval'], 20)
+        r = self.review(p, 1)
+        r['style_scores']['material_rendering'].update(score=2, observation='Synthetic drift rejection path.')
+        r['correction'] = 'Flatten the material shading.'
+        self.assertEqual(p.review(1, r)['state'], 'rejected')
+        with self.assertRaisesRegex(ValueError, 'Style gate'):
+            p.verify()
+
+    def test_legacy_contract_is_upgraded_without_changing_style_authority(self):
+        p = self.production('legacy-run', 4, style=STYLE)
+        original_style_hash = p.scope()['style_sha256']
+        legacy = p.scope()
+        legacy['review_contract'] = 1
+        legacy['checkpoint_interval'] = 0
+        p.db.execute('UPDATE production SET data=? WHERE id=1', (json.dumps(legacy),))
+        p.db.commit()
+        upgraded = p.scope()
+        self.assertEqual(upgraded['review_contract'], 2)
+        self.assertEqual(upgraded['checkpoint_interval'], 20)
+        self.assertEqual(upgraded['style_sha256'], original_style_hash)
 
     def test_preserve_preexisting_approved(self):
         p = self.production()

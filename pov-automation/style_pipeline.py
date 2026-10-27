@@ -34,6 +34,10 @@ CHECKS = ('linework', 'colour', 'shading', 'character_construction', 'background
           'identity', 'content', 'composition')
 STYLE_SCORES = ('linework', 'face_construction', 'colour_regions', 'cel_shading', 'material_rendering', 'background_finish')
 DRIFT_SCORES = ('linework', 'face_construction', 'colour_regions', 'cel_shading', 'material_rendering', 'background_finish')
+# Drift checks are production safeguards, not properties of a particular art
+# authority. Keep them enabled even when the active style manifest predates v2.
+REVIEW_CONTRACT = 2
+CHECKPOINT_INTERVAL = 20
 ROLES = {'pov_scene': 'main', 'cost_scene': 'main', 'world_scene': 'supporting', 'object_scene': 'none'}
 
 
@@ -134,7 +138,7 @@ class Production:
     def batches(self):
         scenes = sorted(self.script['scenes'], key=lambda s: s['scene_number'])
         numbers = [s['scene_number'] for s in scenes]
-        interval = int(self.manifest.get('checkpoint_interval', 0))
+        interval = int(self.scope().get('checkpoint_interval', CHECKPOINT_INTERVAL))
         if interval <= 0 or not numbers:
             return [numbers] if numbers else []
         first_for_style = {}
@@ -298,8 +302,8 @@ class Production:
                 return self.scope()
             data = dict(production_id=str(uuid.uuid4()), root=str(self.folder), script_sha256=self.script_hash,
                         style_version=self.manifest['version'], style_sha256=self.style_hash,
-                        style_root=str(self.style), review_contract=self.manifest.get('review_contract', 1),
-                        checkpoint_interval=int(self.manifest.get('checkpoint_interval', 0)),
+                        style_root=str(self.style), review_contract=REVIEW_CONTRACT,
+                        checkpoint_interval=CHECKPOINT_INTERVAL,
                         max_attempts=max_attempts)
             self.db.execute('INSERT INTO production VALUES(1,?)', (encoded(data),))
             return data
@@ -316,6 +320,16 @@ class Production:
         if digest(self.folder / 'current_script.json') != self.script_hash:
             raise ValueError('Script changed during this operation')
         authority(self.style)
+        # Upgrade enrolled contract-1 runs in place. Existing images and
+        # approvals are preserved, while verify() now requires fresh batch
+        # audits bound to their exact bytes before assembly.
+        if data.get('review_contract', 1) < REVIEW_CONTRACT:
+            was_in_transaction = self.db.in_transaction
+            data['review_contract'] = REVIEW_CONTRACT
+            data['checkpoint_interval'] = CHECKPOINT_INTERVAL
+            self.db.execute('UPDATE production SET data=? WHERE id=1', (encoded(data),))
+            if not was_in_transaction:
+                self.db.commit()
         return data
 
     def latest(self, number):

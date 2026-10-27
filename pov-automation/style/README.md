@@ -98,9 +98,14 @@ After the configured total attempts, the scene becomes `needs_attention` and
 generation stops for that scene. Continue independent scenes and report it.
 Do not delete state or reinitialize to reset the attempt budget.
 
-## Batch drift audits (review contract 2)
+## Drift scoring and batch audits (all Codex productions)
 
-Authorities using review contract 2 require an individual style score (0 = close,
+Every new Codex production uses review contract 2, regardless of which approved
+style version is active. Existing enrolled contract-1 productions upgrade in
+place on their next pipeline operation. Their artwork and style authority stay
+unchanged, while final assembly requires fresh hash-bound batch audits.
+
+Each scene requires an individual style score (0 = close,
 1 = acceptable variation, 2 = drift) for linework, face construction, colour
 regions, cel shading, material rendering and background finish. A score of 2 or
 an unexpected subject, period cue or prop prevents scene approval. After all
@@ -119,7 +124,8 @@ python style_pipeline.py --production $productionFolder checkpoint 1 'C:/batch-r
 ```
 
 The first audit includes at least one scene of every class; later batches contain
-20 scenes. A failed or uncertain audit must identify scenes for rework. Use
+20 scenes. The next batch remains blocked until the prior batch audit passes. A
+failed or uncertain audit must identify scenes for rework. Use
 `reopen SCENE REASON`, then repeat generation and individual review before
 re-auditing the batch. A passing audit is bound to exact approved-image and
 reference hashes; changing or omitting any image invalidates it. The audit is a

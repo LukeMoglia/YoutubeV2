@@ -26,7 +26,9 @@ inactive until the user approves it.
    The tool manages model/settings; do not invent seed, model-version or style
    weight controls. Account limits are those of the installed built-in tool.
 4. Open the actual candidate at full resolution and the canonical references.
-   Fill the generated review template from visible evidence. Compare lines,
+   Fill the generated review template from visible evidence, including numeric
+   drift scores (0 = close, 1 = acceptable variation, 2 = drift) for all six
+   rendering dimensions and an explicit content-isolation observation. Compare lines,
    shapes, colours, shading, backgrounds and finish across every region; also
    separately check identity/age/costume, story/era/props, and composition.
    Supporting characters must not copy reference identities; object frames must
@@ -41,7 +43,11 @@ inactive until the user approves it.
    exists; ingest it first. Pending requests must be reviewed before another
    generation. An interrupted external call cannot be deduplicated by Python:
    locate its original output or explicitly record the failure before retrying.
-7. Existing approved images are preserved. Never automatically replace them,
+7. Every new Codex production uses the strengthened review contract, regardless
+   of the active approved style version. Audit each hash-bound 20-scene batch
+   before continuing to the next batch; the first batch includes all scene
+   classes. Existing contract-1 productions upgrade in place and need fresh
+   batch audits before assembly. Existing approved images are preserved. Never automatically replace them,
    and never treat their old filename-only checklists as current hash-bound
    visual evidence. Report unresolved and uncertain scenes honestly.
 
