@@ -22,13 +22,19 @@ A deliberate artistic change requires a new version and user direction.
   light tan for the shared protagonist. Supporting skin tones remain distinct.
   Keep colour masses readable; no neon saturation, HDR contrast or global orange
   grading. Night, weather and practical lamps change hues, not drawing technique.
-- Shading: a base fill and one principal cel-shadow family, with a small secondary
-  occlusion region when necessary. Broad restrained illustrated tonal changes
-  and simplified bands on metal are allowed, as in kitchen scene 1. Skin and
-  cloth remain predominantly matte. No mirror-scene reflections, plastic skin,
-  ray-traced material response, dense specular gradients, painterly blending,
-  photographic microtexture or volumetric light shafts. Shadow edges stay clearly
-  drawn; subtle ambient softness must never dissolve contours.
+- Shading: use a base fill and one principal cel-shadow family, with a small
+  secondary occlusion region when necessary. Use crisp cel animation treatment
+  throughout: flat base colors, one hard-edged shadow shape, and at most one small
+  flat highlight. No gradients or soft blending. Equipment remains identifiable
+  through silhouette and a few outlined details, not surface rendering. Stainless
+  steel uses matte grey planes with one darker grey plane; no shine streaks or
+  mirror-like reflections. Food uses flat color regions and outlined shadows,
+  without wet gloss or tiny garnish detail. Background distance uses simple color
+  separation and clear contours, with no blur or atmospheric softening. Keep every
+  surface in the same cel-shaded system. Skin and cloth remain matte. No plastic
+  skin, ray-traced material response, painterly blending, photographic microtexture
+  or volumetric light shafts. Shadow edges stay clearly drawn; ambient softness
+  must never dissolve contours.
 - Character construction: rounded oval heads, small solid dark oval eyes without
   detailed irises, small rounded button noses, rounded visible ears, heavy simple
   expressive eyebrows, concise mouth curves. Preserve the existing protagonist
@@ -118,5 +124,10 @@ or failed batch audit blocks further batches and assembly.
 This v2 bible preserves the v1 rendering system and proposes a content-neutral
 style sheet in place of narrative-bearing Roman Legion and modern kitchen style
 references. The candidate is not active until the user approves the actual sheet
-and its comparison with the existing v1 artwork. The protagonist reference is
+and its comparison with the existing v1 artwork. The latest candidate sheet uses bold warm outlines, simplified faces, flat
+color planes and one hard-edged shadow per form. Earlier candidate sheets remain
+beside it as revision history. The bounded kitchen retest still showed glossy
+metal and softened, highly rendered backgrounds, so that candidate failed. The
+current revision tightens the rendering standard to flat colors, crisp contours,
+one hard-edged shadow, and no gradients, reflections, soft focus or micro-detail. The protagonist reference is
 byte-for-byte the v1 identity sheet and remains a separate identity reference.
