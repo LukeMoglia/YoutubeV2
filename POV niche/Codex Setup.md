@@ -4,6 +4,11 @@ This repository includes Codex skills in `.agents/skills/` alongside the origina
 
 ## One-time setup
 
+To walk through a fresh clone interactively, open the repository root in Codex
+and run `$pov-setup`. It configures local channel settings and identifies
+personal assets or optional tools still needed without installing heavy audio
+models or calling content providers.
+
 The clone already contains `pov-automation/`. Add the local files used by your
 channel inside it:
 
