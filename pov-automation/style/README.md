@@ -19,6 +19,8 @@ contract 2, but its manifest says `pending_user_approval`. It is intentionally
 not a runnable active version. Do not copy it into the active library or change
 the pointer until the user approves the reference image and bible. The proposal
 and its limitations are described in `proposals/v2/README.md`.
+Normal production initialization rejects a pending proposal manifest. Only the
+test harness can opt in to exercise the proposed routing before approval.
 
 The references are selected existing approved assets, visually inspected during
 this implementation, not the newest generated images. Their source and reason

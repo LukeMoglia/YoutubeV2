@@ -110,10 +110,12 @@ def age_layer(bank, level):
 
 
 class Production:
-    def __init__(self, folder, style=STYLE):
+    def __init__(self, folder, style=STYLE, allow_pending=False):
         self.folder = Path(folder).resolve()
         self.style = Path(style).resolve()
         self.manifest, self.style_hash = authority(self.style)
+        if self.manifest.get('approval_status') == 'pending_user_approval' and not allow_pending:
+            raise ValueError('This style proposal is not approved for production; use the active approved version')
         self.script = read(self.folder / 'current_script.json')
         self.script_hash = digest(self.folder / 'current_script.json')
         self.work = self.folder / 'images/style_state'

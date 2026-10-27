@@ -10,7 +10,7 @@ from pathlib import Path
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from style_pipeline import Production, STYLE, authority, digest, normalize, save, verify_for_assembly
+from style_pipeline import Production, STYLE, authority, digest, fingerprint, normalize, save, verify_for_assembly
 
 PROPOSAL = Path(__file__).resolve().parents[1] / 'style/proposals/v2'
 
@@ -21,24 +21,35 @@ class StylePipelineTests(unittest.TestCase):
         self.root = Path(self.tmp.name)
         self.addCleanup(self.tmp.cleanup)
 
-    def production(self, name='roman', count=4, style=STYLE):
+    def production(self, name='roman', count=4, style=STYLE, allow_pending=False):
         folder = self.root / name
         folder.mkdir(exist_ok=True)
+        if name == 'ancient-roman':
+            context = dict(world='Ancient Roman military camp', period='first-century CE',
+                           setting='Roman campaign camp', required_visual_elements=['mail armor', 'wooden shields', 'pilum spears'],
+                           excluded_visual_elements=['Michelin kitchen', 'stainless prep counters', 'induction ranges'],
+                           continuity={'production character': 'Roman only'})
+        elif name == 'modern-michelin-kitchen':
+            context = dict(world='Modern Michelin kitchen', period='contemporary 2020s',
+                           setting='fine-dining restaurant kitchen', required_visual_elements=['stainless prep counters', 'induction ranges', 'chef jacket'],
+                           excluded_visual_elements=['Roman legionaries', 'mail armor', 'pilum spears', 'ancient standards'],
+                           continuity={'production character': 'kitchen only'})
+        else:
+            context = dict(world=name, period=f'{name} only', setting=f'{name} setting',
+                           required_visual_elements=[f'{name} required setting'], excluded_visual_elements=['unrelated eras'],
+                           continuity={'continuity marker': f'{name} only'})
         styles = [('pov_scene', 'main'), ('world_scene', 'supporting'), ('object_scene', 'none'), ('cost_scene', 'main')]
         scenes = [dict(scene_number=n, level=1, scene_style=styles[(n-1)%4][0], character=styles[(n-1)%4][1],
                        image_prompt=f'unique prop {n}; cinematic framing; realistic placement') for n in range(1, count+1)]
-        save(folder / 'current_script.json', dict(topic=name, production_context=dict(
-            world=name, period=f'{name} only', setting=f'{name} setting',
-            required_visual_elements=[f'{name} required setting'], excluded_visual_elements=['unrelated eras'],
-            continuity={'continuity marker': f'{name} only'}), character_bank=dict(
+        save(folder / 'current_script.json', dict(topic=name, production_context=context, character_bank=dict(
             protagonist_fixed_core='local warm tan bald protagonist', protagonist_age_layers={'level_1_2': 'young smooth face'},
             protagonist_costumes={'level_1': name + ' wardrobe'}, secondary_characters={name: name+' distinct person'}), scenes=scenes))
-        p = Production(folder, style=style); p.init(); self.addCleanup(p.close)
+        p = Production(folder, style=style, allow_pending=allow_pending); p.init(); self.addCleanup(p.close)
         return p
 
     def candidate(self, p, n=1):
         p.prepare(n)
-        path = self.root / 'fixture.png'
+        path = p.folder / 'fixture.png'
         Image.new('RGB', (320, 180), 'grey').save(path)
         return p.ingest(n, path, 'SYNTHETIC TEST FIXTURE, NOT VISUAL EVIDENCE')
 
@@ -56,31 +67,57 @@ class StylePipelineTests(unittest.TestCase):
         return r
 
     def test_300_requests_two_parallel_productions_and_resume(self):
-        a = self.production('roman', 300); b = self.production('submarine', 300)
+        style = PROPOSAL
+        a = self.production('ancient-roman', 300, style=style, allow_pending=True)
+        b = self.production('modern-michelin-kitchen', 300, style=style, allow_pending=True)
         def run(folder):
-            p = Production(folder)
+            p = Production(folder, style=style, allow_pending=True)
             try:
+                fixture = folder / 'fixture.png'
+                Image.new('RGB', (320, 180), 'grey').save(fixture)
+                batch_ends = {numbers[-1]: index for index, numbers in enumerate(p.batches(), start=1)}
                 for n in range(1, 301):
                     d = p.prepare(n); req = d['request']
                     self.assertEqual(req['style_sha256'], p.style_hash)
-                    self.assertIn((STYLE/'STYLE_BIBLE.md').read_text(encoding='utf-8'), req['tool_arguments']['prompt'])
+                    self.assertIn((style/'STYLE_BIBLE.md').read_text(encoding='utf-8'), req['tool_arguments']['prompt'])
                     self.assertFalse(req['tool_arguments']['transparent_background'])
                     self.assertEqual(req['tool_arguments']['referenced_image_paths'], [r['path'] for r in req['references']])
-                    self.assertEqual('identity' in [r['id'] for r in req['references']], n % 4 in (1, 0))
-                    other = 'submarine' if folder.name == 'roman' else 'roman'
+                    expected_refs = ['neutral', 'identity'] if n % 4 in (1, 0) else ['neutral']
+                    self.assertEqual([r['id'] for r in req['references']], expected_refs)
+                    self.assertTrue(all(Path(r['path']).resolve().is_relative_to(style.resolve())
+                                        for r in req['references']))
+                    other = 'modern-michelin-kitchen' if folder.name == 'ancient-roman' else 'ancient-roman'
                     self.assertNotIn(other, json.dumps(req['video_context']))
-                    self.assertEqual(req['video_context']['world'], folder.name)
+                    self.assertIn('Roman' if folder.name == 'ancient-roman' else 'Michelin', req['video_context']['world'])
                     self.assertEqual(req['video_context']['secondary_characters'], {})
                     if n in (1, 100, 200, 300):
-                        p.close(); p = Production(folder)
+                        p.close(); p = Production(folder, style=style, allow_pending=True)
                         self.assertEqual(d['request_sha256'], p.prepare(n)['request_sha256'])
                         p.technical_failure(n, 'Simulated interrupted tool; original output confirmed absent')
                         retry = p.prepare(n)
                         self.assertEqual(retry['attempt'], 2)
                         self.assertEqual(retry['request']['references'], req['references'])
                         self.assertNotEqual(retry['request']['tool_arguments']['prompt'], req['tool_arguments']['prompt'])
-                        p.close(); p = Production(folder)
+                        p.close(); p = Production(folder, style=style, allow_pending=True)
                         self.assertEqual(retry['request_sha256'], p.prepare(n)['request_sha256'])
+                    result = p.ingest(n, fixture, 'SYNTHETIC STATE-MACHINE TEST FIXTURE; NOT VISUAL EVIDENCE')
+                    result.update(evaluator='synthetic test only', full_resolution_viewed=True)
+                    for check in result['checks'].values():
+                        check.update(verdict='pass', observation='Synthetic fixture; pipeline state only, not an artistic assessment.')
+                    result['regions'] = {key: 'Synthetic fixture only; no visual style evidence.' for key in result['regions']}
+                    for metric in result['style_scores'].values():
+                        metric.update(score=0, observation='Synthetic fixture only; no visual style evidence.')
+                    result['content_isolation']['observation'] = 'Synthetic fixture only; content gate plumbing.'
+                    p.review(n, result)
+                    if n in batch_ends:
+                        batch = batch_ends[n]
+                        audit = p.checkpoint_template(batch)
+                        audit.update(evaluator='synthetic test only', full_resolution_comparisons_viewed=True,
+                                     verdict='pass', observation='Synthetic contact sheet; no visual style evidence.')
+                        for metric in audit['drift_scores'].values():
+                            metric.update(score=0, observation='Synthetic audit fixture; gate plumbing only.')
+                        p.checkpoint(batch, audit)
+                p.verify()
                 return p.scope()['production_id']
             finally: p.close()
         with concurrent.futures.ThreadPoolExecutor(2) as pool:
@@ -161,17 +198,35 @@ class StylePipelineTests(unittest.TestCase):
         self.assertEqual(manifest['routes']['none'], ['neutral'])
         self.assertEqual(manifest['checkpoint_interval'], 20)
 
+    def test_pending_proposal_is_not_accepted_by_normal_production(self):
+        folder = self.root / 'pending'
+        folder.mkdir()
+        save(folder / 'current_script.json', dict(topic='test', character_bank={}, scenes=[]))
+        with self.assertRaisesRegex(ValueError, 'not approved for production'):
+            Production(folder, style=PROPOSAL)
+
+    def test_v1_roman_reference_cannot_be_injected_into_v2_request(self):
+        p = self.production('modern-kitchen', 4, style=PROPOSAL, allow_pending=True)
+        data = p.prepare(1)
+        request = data['request']
+        roman_asset = STYLE / 'references/people.png'
+        request['references'][0].update(path=str(roman_asset), sha256=digest(roman_asset))
+        request['tool_arguments']['referenced_image_paths'][0] = str(roman_asset)
+        data['request_sha256'] = fingerprint(request)
+        with self.assertRaisesRegex(ValueError, 'Reference bytes changed'):
+            p.validate_request(data)
+
     def test_review_score_two_fails_and_batch_audit_is_required(self):
-        p = self.production('candidate', 4, style=PROPOSAL)
+        p = self.production('candidate', 4, style=PROPOSAL, allow_pending=True)
         r = self.review(p, 1)
         r['style_scores']['linework'].update(score=2, observation='Synthetic failure path.')
         r['correction'] = 'Correct the line weight.'
         self.assertEqual(p.review(1, r)['state'], 'rejected')
         with self.assertRaisesRegex(ValueError, 'Style gate'):
-            verify_for_assembly(p.folder)
+            p.verify()
 
     def test_v2_requires_hash_bound_batch_review_before_assembly(self):
-        p = self.production('candidate_batch', 4, style=PROPOSAL)
+        p = self.production('candidate_batch', 4, style=PROPOSAL, allow_pending=True)
         for number in range(1, 5):
             self.assertEqual(p.review(number, self.review(p, number))['state'], 'approved')
         with self.assertRaisesRegex(ValueError, 'batch 1'):
@@ -184,6 +239,8 @@ class StylePipelineTests(unittest.TestCase):
         audit['rework_scenes'] = []
         p.checkpoint(1, audit)
         p.verify()
+        with self.assertRaisesRegex(ValueError, 'not approved for production'):
+            verify_for_assembly(p.folder)
         # Omitted images cannot be hidden by a valid hash subset.
         stored = json.loads(p.db.execute('SELECT data FROM checkpoints WHERE batch=1').fetchone()[0])
         stored['image_hashes'].pop('1')

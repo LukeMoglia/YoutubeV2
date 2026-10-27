@@ -19,3 +19,27 @@ guarantee identical results across unlimited generations.
 `pending_user_approval`; do not activate or silently substitute it for v1. The
 next step is for the user to review the neutral sheet and bible, then approve or
 request changes before this proposal is promoted to an active version.
+
+## Bounded visual validation (2026-10-27)
+
+Two exact requests were prepared through the proposal pipeline and generated
+with the built-in Codex image tool: a modern Michelin kitchen scene and a Roman
+campaign-camp scene. The actual outputs are preserved in `validation/` for
+comparison. Neither output showed the other production's equipment or setting,
+so the neutral reference route avoided an obvious story-content leak in this
+small sample.
+
+Both were inspected at full resolution beside the proposed sheet and existing
+v1 examples. The Roman camp remained a clean outlined illustration with simple
+faces, broad colour regions and coherent detailed scenery; its six style scores
+were 0 or 1, so it passed the bounded trial review. The modern kitchen scene
+used the right content and medium, but glossy gradients and reflective equipment
+scored 2 for cel shading, material rendering and background finish. It was
+rejected with a targeted correction. This is evidence that context isolation
+works in these two samples, while the candidate style authority still does not
+reliably hold the kitchen rendering to the approved standard. Keep v1 active;
+revise and revalidate v2 before considering activation.
+
+These two outputs are a small stochastic sample, not proof of universal
+consistency or a full production run. The synthetic regression tests described
+in `../../README.md` verify pipeline state and gates, not artwork quality.
